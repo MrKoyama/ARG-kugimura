@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>供犠村 掟書（禁忌記録） - 久木村 住民管理ポータル</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- [裏] 統一テンプレート（Lv.2：高汚染区域） --- */
+        body { 
+            font-family: 'Shippori Mincho', serif; 
+            margin: 0; padding: 0; 
+            background-color: #080000; /* わずかに赤みのある黒 */
+            color: #b09090; 
+            display: flex; flex-direction: column; min-height: 100vh; 
+        }
+
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px 40px; background-color: #000; 
+            border-bottom: 2px solid #800; z-index: 10; 
+        }
+        
+        .logo { 
+            font-size: 26px; font-weight: 700; color: #a00; 
+            text-decoration: none; display: flex; align-items: center; 
+            letter-spacing: 2px; line-height: 1; 
+        }
+        
+        .logo-image { 
+            height: 42px !important; width: auto; margin-right: 12px; 
+            filter: grayscale(1) brightness(0.5) sepia(1) hue-rotate(-50deg) saturate(5); 
+        }
+        
+        .search-container { display: flex; }
+        .search-container input[type="text"] { padding: 8px 12px; border: 1px solid #500; background: #000; color: #a00; border-radius: 4px 0 0 4px; outline: none; width: 200px; }
+        .search-container button { padding: 8px 16px; background-color: #600; color: #000; border: none; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: bold; }
+
+        main { padding: 60px 20px; max-width: 850px; margin: 0 auto; flex-grow: 1; width: 100%; box-sizing: border-box; }
+        
+        .page-title { 
+            color: #f00; border-bottom: 1px solid #800; 
+            padding-bottom: 15px; margin-bottom: 40px; 
+            font-size: 22px; font-weight: 700; text-align: center;
+            text-shadow: 0 0 10px rgba(255,0,0,0.3);
+        }
+
+        .document-container { 
+            background: #0d0000; padding: 50px; border: 1px double #600;
+            line-height: 2.2; position: relative;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.9);
+        }
+
+        .rule-section { margin-bottom: 40px; }
+        .rule-section h2 { 
+            color: #c00; font-size: 1.3rem; border-left: 4px solid #c00; 
+            padding-left: 15px; margin-bottom: 20px; 
+        }
+
+        .rule-text { font-size: 1.05rem; text-align: justify; }
+        .important { color: #f22; font-weight: 700; }
+
+        .masked { 
+            background-color: #400; color: transparent; 
+            display: inline-block; padding: 0 4px; border-radius: 2px;
+            user-select: none; cursor: default;
+        }
+
+        .status-footer { 
+            text-align: right; padding: 10px 40px; 
+            font-family: 'Courier New', monospace; font-size: 14px; 
+            color: #999; font-weight: bold;
+        }
+
+        footer { background-color: #000; color: #444; text-align: center; padding: 20px 0; font-size: 11px; }
+
+        /* 血の跡のような演出 */
+        .stain {
+            position: absolute; bottom: 5%; right: 5%; width: 150px; height: 150px;
+            background: radial-gradient(circle, rgba(100,0,0,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="logo" class="logo-image">
+            久木村 住民管理ポータル
+        </a>
+        <div class="search-container">
+            <form id="site-search" onsubmit="handleSearch(event)">
+                <input type="text" id="search-input" placeholder="サイト内検索…" required>
+                <button type="submit">検索</button>
+            </form>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-title">【内部秘匿資料】供犠村の掟</div>
+
+        <div class="document-container">
+            <div class="stain"></div>
+
+            <div class="rule-section">
+                <h2>第一条：給仕の義</h2>
+                <p class="rule-text">
+                    御臥山に鎮座まします<span class="important">御腐し様</span>は、この地の「飢え」を永久に食らい尽くす御方なり。
+                    村人はその対価として、常に新鮮なる「器（生贄）」を奉納口より供し続けねばならぬ。
+                </p>
+            </div>
+
+            <div class="rule-section">
+                <h2>第二条：器の選定</h2>
+                <p class="rule-text">
+                    御腐し様に捧げる「器」は、<span class="important">すべて村内の血筋の者</span>より選定すべし。
+                    選定は<span class="masked">守谷家</span>の差配に基づき、村内の各家より順次これを供出するものとする。
+                </p>
+            </div>
+
+            <div class="rule-section">
+                <h2>第三条：沈黙の誓約</h2>
+                <p class="rule-text">
+                    村内の「器」の欠員については、病死または夜逃げとして処理すべし。
+                    御方の存在および給仕の義について、村境を越えて語る者は、
+                    その者自身を「不適合の器」として<strong>生きたまま奉納口へ投じる</strong>ものとする。
+                </p>
+            </div>
+
+            <div class="rule-section">
+                <h2>第四条：共同体の維持</h2>
+                <p class="rule-text">
+                    生贄は悲劇にあらず。村が明日を繋ぐための「共同作業」なり。
+                    器を出した家には、その年の収穫の優先分配および<span class="masked">特別住民コード</span>の付与をもって報いるものとする。
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <div class="status-footer">&lt; 16/23 &gt; (Lv.4)</div>
+    <footer><p>このサイトの内容はフィクションです。実在の人物・団体とは一切関係ありません。</p></footer>
+
+    <script>
+        function handleSearch(event) {
+            event.preventDefault(); 
+            const query = document.getElementById('search-input').value.trim();
+            window.location.href = 'search.html?q=' + encodeURIComponent(query);
+        }
+    </script>
+</body>
+</html>

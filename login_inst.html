@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAFF LOGIN - National Institute of Mycology</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            background-color: #00050a; 
+            color: #00aaff; 
+            font-family: 'Share Tech Mono', monospace;
+            margin: 0; height: 100vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            overflow: hidden;
+        }
+
+        /* 背景のグリッド演出 */
+        body::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(0, 170, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 170, 255, 0.05) 1px, transparent 1px);
+            background-size: 100px 100px; pointer-events: none;
+        }
+
+        .login-box {
+            width: 420px; padding: 40px;
+            background: rgba(0, 15, 30, 0.95);
+            border: 1px solid #0055aa;
+            box-shadow: 0 0 30px rgba(0, 170, 255, 0.1);
+            position: relative;
+            transition: opacity 0.5s;
+            z-index: 10;
+        }
+
+        .inst-logo { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; text-align: center; color: #fff; margin-bottom: 5px; }
+        .system-sub { text-align: center; font-size: 0.7rem; color: #0088ff; margin-bottom: 30px; border-bottom: 1px solid #003366; padding-bottom: 15px; }
+
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-size: 0.7rem; margin-bottom: 5px; color: #0088ff; }
+        
+        input {
+            width: 100%; padding: 12px; box-sizing: border-box;
+            background: #000; border: 1px solid #0055aa;
+            color: #00ff88; font-family: 'Share Tech Mono', monospace; outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        input.error { border-color: #ff4444; box-shadow: 0 0 10px rgba(255, 68, 68, 0.5); color: #ff4444; }
+
+        .error-msg { color: #ff4444; font-size: 0.7rem; height: 1.2em; margin-bottom: 10px; display: none; text-align: center; }
+
+        button {
+            width: 100%; padding: 15px; background: #0055aa; color: #fff;
+            border: none; cursor: pointer; font-family: 'Orbitron', sans-serif; transition: 0.2s;
+        }
+        button:hover { background: #0088ff; }
+
+        /* ヒント用スタイルは削除 */
+
+        /* 認証演出用オーバーレイ */
+        #auth-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; display: none; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 100;
+        }
+
+        .console-text { color: #00ff88; font-size: 0.9rem; margin-bottom: 10px; width: 350px; text-align: left; }
+        .user-id-card { border: 1px solid #00ff88; padding: 15px; margin-top: 10px; display: none; width: 320px; background: rgba(0, 255, 136, 0.05); margin-bottom: 20px; }
+        .progress-container { width: 350px; height: 10px; border: 1px solid #00ff88; position: relative; background: rgba(0, 255, 136, 0.1); }
+        .progress-bar { width: 0%; height: 100%; background: #00ff88; box-shadow: 0 0 10px #00ff88; transition: width 0.1s linear; }
+
+        .status-footer { position: absolute; bottom: 20px; right: 40px; font-family: 'Orbitron', sans-serif; font-size: 14px; color: #003366; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="login-box" id="login-container">
+        <div class="inst-logo">NATIONAL INSTITUTE OF MYCOLOGY</div>
+        <div class="system-sub">CENTRAL ASSET ACCESS TERMINAL</div>
+        
+        <div id="error-display" class="error-msg"></div>
+
+        <form onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>PERSONNEL_ID</label>
+                <input type="text" id="user-id" required autocomplete="off" placeholder="********">
+            </div>
+            <div class="form-group">
+                <label>ACCESS_PASSWORD</label>
+                <input type="password" id="password" required placeholder="********">
+            </div>
+            <button type="submit">AUTHORIZE</button>
+        </form>
+    </div>
+
+    <div id="auth-overlay">
+        <div class="console-text" id="console-msg">AUTHENTICATING...</div>
+        <div class="user-id-card" id="user-card">
+            <div style="font-size: 0.6rem; color: #00ff88; margin-bottom: 5px;">IDENTIFIED PERSONNEL:</div>
+            <div style="font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: #fff;">SAEKI KOJI</div>
+            <div style="font-size: 0.7rem; color: #0088ff;">ID: 8235149 / ROLE: CHIEF RESEARCHER</div>
+        </div>
+        <div class="progress-container" id="p-container" style="display:none;">
+            <div class="progress-bar" id="p-bar"></div>
+        </div>
+        <div id="status-msg" style="font-size: 0.7rem; color: #0088ff; margin-top: 10px; width: 350px;"></div>
+    </div>
+
+    <div class="status-footer">&lt; 22/23 &gt; (Lv.4)</div>
+
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            const idInput = document.getElementById('user-id');
+            const passInput = document.getElementById('password');
+            const errorDisplay = document.getElementById('error-display');
+            
+            idInput.classList.remove('error');
+            passInput.classList.remove('error');
+            errorDisplay.style.display = 'none';
+
+            const id = idInput.value;
+            const pass = passInput.value;
+
+            // IDとPASSWORDの照合
+            const CORRECT_ID = '8235149';
+            const CORRECT_PASS = '62371783';
+
+            if (id === CORRECT_ID && pass === CORRECT_PASS) {
+                document.getElementById('login-container').style.opacity = '0';
+                setTimeout(startAuthSequence, 500);
+            } else {
+                errorDisplay.style.display = 'block';
+                if (id !== CORRECT_ID) {
+                    idInput.classList.add('error');
+                    errorDisplay.innerText = "INVALID PERSONNEL_ID.";
+                } else if (pass !== CORRECT_PASS) {
+                    passInput.classList.add('error');
+                    errorDisplay.innerText = "INVALID ACCESS_PASSWORD.";
+                }
+            }
+        }
+
+        function startAuthSequence() {
+            const overlay = document.getElementById('auth-overlay');
+            const card = document.getElementById('user-card');
+            const pBar = document.getElementById('p-bar');
+            const pContainer = document.getElementById('p-container');
+            const msg = document.getElementById('console-msg');
+            const status = document.getElementById('status-msg');
+            
+            overlay.style.display = 'flex';
+            
+            setTimeout(() => {
+                msg.innerText = "USER IDENTIFIED.";
+                card.style.display = 'block';
+                
+                setTimeout(() => {
+                    pContainer.style.display = 'block';
+                    status.innerText = "INITIALIZING ARCHIVE RECOVERY...";
+                    
+                    let progress = 0;
+                    const interval = setInterval(() => {
+                        progress += Math.floor(Math.random() * 7) + 1;
+                        if (progress >= 100) {
+                            progress = 100;
+                            clearInterval(interval);
+                            status.innerText = "LOGIN SUCCESSFUL. WELCOME, SAEKI KOJI.";
+                            setTimeout(() => {
+                                // ログイン後の最終報告書ページへ
+                                window.location.href = 'final_report.html';
+                            }, 1000);
+                        }
+                        pBar.style.width = progress + '%';
+                    }, 80);
+                }, 1000);
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

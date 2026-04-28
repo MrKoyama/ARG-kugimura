@@ -1,0 +1,59 @@
+/* --- [もともとの共通設定] --- */
+body { font-family: 'Noto Sans JP', sans-serif; font-weight: 400; margin: 0; padding: 0; background-color: #f4f1ea; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+header { display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; background-color: #ffffff; border-bottom: 3px solid #3c5a24; }
+
+/* --- [ロゴの設定：ここを最新に！] --- */
+/* --- ロゴ周りの最終調整 --- */
+.logo {
+    font-size: 26px;
+    font-weight: 700;
+    color: #3c5a24;
+    text-decoration: none;
+    display: flex;
+    align-items: center; /* 上下中央揃えの基本 */
+    letter-spacing: 2px;
+    line-height: 1;      /* 文字の行高さをリセットしてズレを防ぐ */
+}
+
+.logo-image {
+    height: 42px !important; /* 文字のボリュームに合わせて微調整 */
+    width: auto;
+    margin-right: 12px;
+    display: block;
+    
+    /* 【色の変更】黒を #3c5a24（緑）に変える魔法の数値 */
+    filter: invert(28%) sepia(13%) saturate(2222%) hue-rotate(52deg) brightness(95%) contrast(88%);
+    
+    /* 【高さの微調整】もしこれでも文字より高く見えるなら、下の数字を1pxずつ変えてみてください */
+    position: relative;
+    top: -1px; 
+}
+
+
+/* --- [ナビ・メイン・フッターの設定] --- */
+/* (あなたが送ってくれた残りの設定をそのままここに貼り付けておけばOKです) */
+.search-container { display: flex; }
+/* ...以下略... */
+
+/* --- [裏サイト用：search.htmlでのみ機能] --- */
+body.dark-mode .logo-image {
+    filter: invert(15%) sepia(95%) saturate(6000%) hue-rotate(0deg) brightness(90%) contrast(120%);
+}
+
+/* ステータス表示 - 全体は暗いまま、進捗だけを際立たせる */
+        .status-footer { 
+            text-align: right; 
+            padding: 10px 40px; 
+            background-color: transparent; 
+            font-family: 'Courier New', Courier, monospace; 
+            font-size: 14px; 
+            color: #400; /* カッコや記号は背景に沈める */
+            letter-spacing: 1px;
+        }
+
+        /* 進捗の文字（灰色） */
+        .progress-text {
+            color: #999; /* 視認性の良い灰色 */
+            font-weight: bold;
+            text-shadow: none; /* 怪しさを消して無機質に */
+        }

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第二奉納口 供物管理名簿 - 久木村 住民管理ポータル</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- [裏] 統一テンプレート --- */
+        body { 
+            font-family: 'Shippori Mincho', serif; 
+            margin: 0; padding: 0; 
+            background-color: #0a0a0a; 
+            color: #d0d0d0; 
+            display: flex; flex-direction: column; min-height: 100vh; 
+        }
+
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px 40px; background-color: #000; 
+            border-bottom: 2px solid #600; z-index: 10; 
+        }
+        
+        .logo { 
+            font-size: 26px; font-weight: 700; color: #800; 
+            text-decoration: none; display: flex; align-items: center; 
+            letter-spacing: 2px; line-height: 1; 
+        }
+        
+        .logo-image { 
+            height: 42px !important; width: auto; margin-right: 12px; 
+            filter: brightness(0) saturate(100%) invert(10%) sepia(94%) saturate(7400%) hue-rotate(0deg) brightness(91%) contrast(124%); 
+        }
+        
+        .search-container { display: flex; }
+        .search-container input[type="text"] { padding: 8px 12px; border: 1px solid #300; background: #111; color: #eee; border-radius: 4px 0 0 4px; outline: none; width: 200px; }
+        .search-container button { padding: 8px 16px; background-color: #800; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer; }
+
+        main { padding: 40px 20px; max-width: 1100px; margin: 0 auto; flex-grow: 1; width: 100%; box-sizing: border-box; }
+        
+        .page-title { 
+            color: #a00; border-left: 8px solid #600; 
+            padding-left: 15px; margin-bottom: 40px; 
+            font-size: 24px; font-weight: 700;
+        }
+
+        .list-container { 
+            background: #111; padding: 20px; border-radius: 8px; 
+            border: 1px solid #300; overflow-x: auto;
+        }
+
+        .list-summary { margin-bottom: 20px; font-size: 0.85rem; color: #777; border-bottom: 1px solid #222; padding-bottom: 10px; }
+
+        table { width: 100%; border-collapse: collapse; }
+        table th, table td { border: 1px solid #333; padding: 10px; text-align: left; font-size: 0.8rem; }
+        table th { background: #1a0000; color: #f22; font-weight: 700; position: sticky; top: 0; }
+        
+        /* 修正：日付マスク用 */
+        .date-box { font-family: 'Courier New', monospace; color: #666; white-space: nowrap; }
+        .masked { 
+    background-color: #333; /* 塗りつぶしの色 */
+    color: transparent;    /* 文字を完全に透明にする（選択しても中身が見えない） */
+    display: inline-block; 
+    padding: 0 2px; 
+    border-radius: 2px;
+    line-height: 1;
+    vertical-align: middle;
+    user-select: none;      /* マウスでの選択自体を禁止する */
+    cursor: default;
+}
+        
+        .attr-a { color: #ffaa00; font-weight: bold; } /* 適合 */
+        .attr-b { color: #ff4444; font-weight: bold; } /* 違反・目撃 */
+        .attr-c { color: #777; } /* 不明 */
+
+        .status-footer { 
+            text-align: right; padding: 10px 40px; 
+            font-family: 'Courier New', monospace; font-size: 14px; 
+            color: #999; font-weight: bold;
+        }
+
+        footer { background-color: #050505; color: #666; text-align: center; padding: 20px 0; font-size: 13px; border-top: 1px solid #300; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="logo" class="logo-image">
+            久木村 住民管理ポータル
+        </a>
+        <div class="search-container">
+            <form id="site-search" onsubmit="handleSearch(event)">
+                <input type="text" id="search-input" placeholder="サイト内検索..." required>
+                <button type="submit">検索</button>
+            </form>
+        </div>
+    </header>
+
+    <main>
+        <h1 class="page-title">第二奉納口 供物管理名簿</h1>
+
+        <div class="list-container">
+            <div class="list-summary">
+                直近3回の祭事分を含む未処理・処理済み混合名簿
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>奉納日</th>
+                        <th>氏名 / 識別コード</th>
+                        <th>性別</th>
+                        <th>年齢</th>
+                        <th>属性 / 処理種別</th>
+                        <th>備考（確保場所 / 状態）</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>田中 美咲</td><td>女</td><td>21</td><td><span class="attr-a">適合ランクA</span></td><td>同期完了。苗床として非常に良好。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>Unknown #108</td><td>男</td><td>30代</td><td><span class="attr-c">迷い込み</span></td><td>西境界付近。身元照会不要。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>伊藤 裕子</td><td>女</td><td>45</td><td><span class="attr-a">適合ランクB</span></td><td>宿舎外への逸脱。強制確保。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>松本 浩一</td><td>男</td><td>29</td><td><span class="attr-b">「掟」違反</span></td><td>点呼拒否。管理区域外で発見。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>Unknown #107</td><td>女</td><td>10代</td><td><span class="attr-c">分類不能</span></td><td>くき屋207。沈静後、第二へ直送。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>小林 隆史</td><td>男</td><td>34</td><td><span class="attr-a">適合ランクA</span></td><td>くき屋101。精神同期深度100%。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>斉藤 まゆみ</td><td>女</td><td>28</td><td><span class="attr-a">適合ランクA</span></td><td>民宿わらじ。夜鳴きを確認、確保。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>佐藤 健二</td><td>男</td><td>24</td><td><span class="attr-b">事案#42 覗き</span></td><td>くき屋203。沈静後、第二へ直送。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>Unknown #106</td><td>男</td><td>40代</td><td><span class="attr-c">外来者</span></td><td>キャンプ場跡地。作業中に発見。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>渡辺 恵</td><td>女</td><td>19</td><td><span class="attr-a">適合ランクB</span></td><td>短期滞在者。記憶混濁中に搬送。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>佐々木 翼</td><td>男</td><td>22</td><td><span class="attr-b">目撃（奉納列）</span></td><td>神社裏で待機班を視認。即時処理。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>Unknown #105</td><td>女</td><td>20代</td><td><span class="attr-a">適合ランクA</span></td><td>自律歩行困難。山の方角へ跪拝。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>中村 俊介</td><td>男</td><td>31</td><td><span class="attr-a">適合ランクB</span></td><td>くき屋305。多汗、幻聴あり。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>加藤 智子</td><td>女</td><td>52</td><td><span class="attr-b">「覗き」未遂</span></td><td>遮光幕の損壊を試みる。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>Unknown #104</td><td>男</td><td>不明</td><td><span class="attr-c">不法侵入</span></td><td>北側旧道。警告無視のため処理。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>山崎 健</td><td>男</td><td>26</td><td><span class="attr-a">適合ランクA</span></td><td>民宿わらじ。瞳孔散大、無反応。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>Unknown #103</td><td>女</td><td>30代</td><td><span class="attr-a">適合ランクB</span></td><td>同期途中の暴走。鎮静後に投入。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>吉田 裕太</td><td>男</td><td>23</td><td><span class="attr-b">作業妨害</span></td><td>運搬ルート上での居座り。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>Unknown #102</td><td>男</td><td>50代</td><td><span class="attr-c">分類済み</span></td><td>巡回班による回収。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>清水 奈々</td><td>女</td><td>20</td><td><span class="attr-a">適合ランクA</span></td><td>くき屋202。山への帰還を熱望。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>Unknown #101</td><td>女</td><td>不明</td><td><span class="attr-c">予備</span></td><td>在庫調整用。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>山口 直人</td><td>男</td><td>38</td><td><span class="attr-a">適合ランクB</span></td><td>多幸感、自失。誘導に順応。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>阿部 栞</td><td>女</td><td>22</td><td><span class="attr-b">「掟」違反</span></td><td>宵の静寂中に携帯端末を使用。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>Unknown #100</td><td>男</td><td>20代</td><td><span class="attr-c">外来</span></td><td>身元不明。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>井上 亮</td><td>男</td><td>27</td><td><span class="attr-a">適合ランクA</span></td><td>完全沈黙を確認。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>木村 香織</td><td>女</td><td>33</td><td><span class="attr-a">適合ランクA</span></td><td>奉納口付近での「声」を感知。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>Unknown #099</td><td>男</td><td>不明</td><td><span class="attr-c">損壊個体</span></td><td>運搬中の不備により再分類。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>林 太郎</td><td>男</td><td>41</td><td><span class="attr-b">覗き（宿舎外）</span></td><td>神社裏の藪より視認。即時確保。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>斎藤 結衣</td><td>女</td><td>25</td><td><span class="attr-a">適合ランクA</span></td><td>意識レベル低下。同期深。</td></tr>
+                    <tr><td class="date-box"><span class="masked">■■■■</span>/<span class="masked">■■</span>/<span class="masked">■■</span></td><td>Unknown #098</td><td>不明</td><td>不明</td><td><span class="attr-c">残存物</span></td><td>清掃時に回収。</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <div class="status-footer">&lt; 11/23 &gt; (Lv.2)</div>
+    <footer><p>このサイトの内容はフィクションです。実在の人物・団体とは一切関係ありません。</p></footer>
+
+    <script>
+        function handleSearch(event) {
+            event.preventDefault(); 
+            const query = document.getElementById('search-input').value.trim();
+            window.location.href = 'search.html?q=' + encodeURIComponent(query);
+        }
+    </script>
+</body>
+</html>

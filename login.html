@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRITICAL-DATA - 御臥山管理局</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Shippori+Mincho:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* --- [裏] 最深部大型コンソール（Lv.4） --- */
+        body { 
+            background-color: #050000; 
+            color: #ff0000; 
+            font-family: 'Share Tech Mono', monospace; 
+            margin: 0; height: 100vh; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            overflow: hidden;
+            transition: color 0.5s;
+        }
+
+        /* 走査線・ノイズエフェクト（z-index: 100） */
+        .crt-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
+            background-size: 100% 4px, 6px 100%; pointer-events: none; z-index: 100;
+        }
+
+        .login-box {
+            width: 700px; padding: 60px; border: 3px solid #800;
+            background: rgba(15, 0, 0, 0.98); 
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.3);
+            text-align: center; position: relative;
+            transition: border-color 0.5s, box-shadow 0.5s;
+            z-index: 50;
+        }
+
+        .system-title {
+            font-family: 'Shippori Mincho', serif; font-size: 2.2rem;
+            letter-spacing: 8px; color: #f00; margin-bottom: 40px;
+            border-bottom: 3px solid #800; padding-bottom: 20px;
+            transition: color 0.5s, border-color 0.5s;
+        }
+
+        .hint-text {
+            color: #888; font-size: 1.1rem; margin-bottom: 30px;
+            line-height: 1.8; text-align: left;
+            border-left: 4px solid #f00;
+            padding-left: 20px;
+            transition: border-color 0.5s;
+        }
+
+        .input-area { margin: 40px 0; }
+
+        input[type="text"] {
+            background: #000; border: 2px solid #f00; color: #f00;
+            padding: 20px; font-size: 3.5rem; width: 90%; text-align: center;
+            outline: none; font-family: 'Share Tech Mono', monospace;
+            letter-spacing: 20px; transition: all 0.5s;
+        }
+
+        .btn-submit {
+            padding: 20px 60px; background: #a00; color: #fff; border: none;
+            cursor: pointer; font-family: 'Share Tech Mono', monospace;
+            font-size: 1.5rem; font-weight: bold; letter-spacing: 5px;
+            transition: 0.3s;
+        }
+
+        /* 承認時（緑）のスタイル */
+        body.accepted { color: #0f0; }
+        body.accepted .login-box { border-color: #080; box-shadow: 0 0 50px rgba(0, 255, 0, 0.2); }
+        body.accepted .system-title { color: #0f0; border-color: #080; }
+        body.accepted .hint-text { border-color: #0f0; }
+        body.accepted input[type="text"] { border-color: #0f0; color: #0f0; box-shadow: inset 0 0 20px rgba(0,255,0,0.3); }
+        body.accepted .btn-submit { background: #080; }
+
+        /* 「オフシ様」は常に赤 */
+        .god-name { color: #f00 !important; font-weight: bold; }
+
+        /* プログレスバー */
+        #progress-container {
+            width: 100%; height: 30px; border: 1px solid #0f0;
+            margin-top: 30px; display: none; position: relative;
+        }
+        #progress-bar {
+            width: 0%; height: 100%; background: #0f0;
+            transition: width 0.1s linear;
+        }
+        #status-msg { font-size: 1rem; color: #0f0; margin-top: 15px; display: none; }
+
+        .error-msg {
+            color: #f00; font-size: 1.2rem; margin-top: 30px;
+            height: 1.5em; visibility: hidden; font-weight: bold;
+        }
+
+        .status-footer { 
+            position: absolute; bottom: 80px; right: 50px;
+            font-size: 18px; color: #999; font-weight: bold; z-index: 50;
+        }
+
+        /* 免責事項：ノイズを避けるためz-indexを101に、背景色を不透明に */
+        footer {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background-color: #000; color: #fff; /* はっきりした白 */
+            text-align: center; padding: 15px 0; font-size: 12px;
+            border-top: 1px solid #333; z-index: 101; 
+            font-family: sans-serif; letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="crt-overlay"></div>
+
+    <div class="login-box" id="main-box">
+        <div class="system-title">御臥山管理局 重要機密ファイル</div>
+        
+        <div class="hint-text" id="hint">
+            SYSTEM NOTIFICATION:<br>
+            認証パスコードが要求されました。パスコードは、久木村が未曾有の災禍に見舞われ、<span style="color:#f00; font-weight:bold;">「神」</span>と村の共生が始まった西暦4桁です。
+        </div>
+
+        <form id="login-form">
+            <div class="input-area">
+                <input type="text" id="pass" maxlength="4" placeholder="0000" autocomplete="off" autofocus>
+            </div>
+            <button type="submit" class="btn-submit" id="submit-btn">DECRYPT DATA</button>
+        </form>
+
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+        <div id="status-msg">CONNECTING TO ARCHIVE...</div>
+
+        <div id="error" class="error-msg">INVALID PASSCODE. ACCESS DENIED.</div>
+    </div>
+
+    <div class="status-footer">&lt; 19/23 &gt; (Lv.4)</div>
+
+    <footer>このサイトの内容はフィクションです。実在の人物・団体とは一切関係ありません。</footer>
+
+    <script>
+        const form = document.getElementById('login-form');
+        const passInput = document.getElementById('pass');
+        const errorMsg = document.getElementById('error');
+        const submitBtn = document.getElementById('submit-btn');
+        const progContainer = document.getElementById('progress-container');
+        const progBar = document.getElementById('progress-bar');
+        const statusMsg = document.getElementById('status-msg');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const val = passInput.value;
+
+            if (val === '1783') {
+                document.body.classList.add('accepted');
+                passInput.readOnly = true;
+                submitBtn.style.display = 'none';
+                errorMsg.style.display = 'none';
+                
+                progContainer.style.display = 'block';
+                statusMsg.style.display = 'block';
+
+                let width = 0;
+                const messages = [
+                    "AUTHENTICATING...",
+                    "ACCESS GRANTED.",
+                    "DECRYPTING SECURE FILES...",
+                    "ESTABLISHING SECURE CONNECTION...",
+                    "OPENING ARCHIVE: [1783_HUNGER_RECORD]"
+                ];
+
+                const interval = setInterval(() => {
+                    if (width >= 100) {
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            window.location.href = 'classified_archive.html';
+                        }, 500);
+                    } else {
+                        width++;
+                        progBar.style.width = width + '%';
+                        if(width % 20 === 0) {
+                            statusMsg.innerText = messages[Math.floor(width/25)];
+                        }
+                    }
+                }, 30);
+
+            } else {
+                errorMsg.style.visibility = 'visible';
+                passInput.value = '';
+                setTimeout(() => {
+                    errorMsg.style.visibility = 'hidden';
+                    passInput.focus();
+                }, 2000);
+            }
+        });
+
+        passInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+    </script>
+</body>
+</html>

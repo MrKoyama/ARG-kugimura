@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第一奉納口保全記録（完了報告） - 久木村 住民管理ポータル</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- [裏] 統一テンプレート（Lv.3：管理区域） --- */
+        body { 
+            font-family: 'Shippori Mincho', serif; 
+            margin: 0; padding: 0; 
+            background-color: #0a0a0a; 
+            color: #d0d0d0; 
+            display: flex; flex-direction: column; min-height: 100vh; 
+        }
+
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px 40px; background-color: #000; 
+            border-bottom: 2px solid #800; z-index: 10; 
+        }
+        
+        .logo { 
+            font-size: 26px; font-weight: 700; color: #a00; 
+            text-decoration: none; display: flex; align-items: center; 
+            letter-spacing: 2px; line-height: 1; 
+        }
+        
+        .logo-image { 
+            height: 42px !important; width: auto; margin-right: 12px; 
+            filter: brightness(0) saturate(100%) invert(10%) sepia(94%) saturate(7400%) hue-rotate(0deg) brightness(91%) contrast(124%); 
+        }
+        
+        .search-container { display: flex; }
+        .search-container input[type="text"] { padding: 8px 12px; border: 1px solid #300; background: #111; color: #eee; border-radius: 4px 0 0 4px; outline: none; width: 200px; }
+        .search-container button { padding: 8px 16px; background-color: #800; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer; }
+
+        main { padding: 60px 20px; max-width: 900px; margin: 0 auto; flex-grow: 1; width: 100%; box-sizing: border-box; }
+        
+        .page-title { 
+            color: #f00; border-left: 8px solid #a00; 
+            padding-left: 15px; margin-bottom: 40px; 
+            font-size: 24px; font-weight: 700;
+        }
+
+        .log-container { 
+            background: #111; padding: 40px; border-radius: 8px; 
+            border: 1px solid #444; line-height: 1.8;
+        }
+
+        .entry { margin-bottom: 40px; }
+        .entry-title { color: #f22; font-weight: 700; border-bottom: 1px solid #500; display: block; margin-bottom: 15px; font-size: 1.2rem; }
+        
+        .action-block { margin-bottom: 20px; padding-left: 15px; border-left: 2px solid #333; }
+        .action-label { color: #a00; font-weight: bold; margin-bottom: 5px; display: block; }
+
+        .directive-block { 
+            background: #1a0808; border: 1px double #800; padding: 15px; margin-top: 15px;
+            position: relative;
+        }
+        .directive-block::before { content: "御臥山管理局 最終指令"; color: #f00; font-size: 0.75rem; font-weight: bold; position: absolute; top: -10px; left: 10px; background: #111; padding: 0 5px; }
+
+        .masked { background-color: #333; color: transparent; display: inline-block; padding: 0 4px; border-radius: 2px; }
+
+        .status-footer { text-align: right; padding: 10px 40px; font-family: 'Courier New', monospace; font-size: 14px; color: #999; font-weight: bold; }
+
+        footer { background-color: #050505; color: #666; text-align: center; padding: 20px 0; font-size: 13px; border-top: 1px solid #300; }
+        
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 1px, transparent 1px, transparent 2px);
+            pointer-events: none; z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="logo" class="logo-image">
+            久木村 住民管理ポータル
+        </a>
+        <div class="search-container">
+            <form id="site-search" onsubmit="handleSearch(event)">
+                <input type="text" id="search-input" placeholder="サイト内検索…" required>
+                <button type="submit">検索</button>
+            </form>
+        </div>
+    </header>
+
+    <main>
+        <h1 class="page-title">第一奉納口：特殊保全業務 完了報告書</h1>
+
+        <div class="log-container">
+            
+            <div class="entry">
+                <span class="entry-title">1. 現場清掃および遺留品回収（組合対応）</span>
+                <div class="action-block">
+                    <span class="action-label">【実施】</span>
+                    <p>事故発生直後、保全組合第一班により現場の清掃を実施。外部観光客の遺留品、および「非正規の残滓」をすべて回収し、奉納口周辺の「クギワラ液」散布による徹底した消臭と除染を行った。</p>
+                </div>
+            </div>
+
+            <div class="entry">
+                <span class="entry-title">2. 浄化儀礼と機能復旧（組合対応）</span>
+                <div class="action-block">
+                    <span class="action-label">【実施】</span>
+                    <p>清掃完了後、代々の作法に則り、穢れを払うための「浄化の儀式」を執り行った。これにより第一奉納口は正常な神域へと戻り、次回の給仕（生贄奉納）をいつでも受け入れ可能な状態へ復旧させたことを確認した。</p>
+                </div>
+            </div>
+
+            <div class="entry">
+                <span class="entry-title">3. 恒久封鎖への方針転換（管理局指令）</span>
+                <div class="action-block">
+                    <span class="action-label">【状況】</span>
+                    <p>組合による復旧完了報告に対し、御臥山管理局より「不浄は根深く、再利用は不可」との最終判断が下る。</p>
+                </div>
+                <div class="directive-block">
+                    <p>「組合による浄化は表面的なものに過ぎない。<span class="masked">オフシ様</span>は既に『外部の味』を記憶しており、第一奉納口を介した村人の奉納はもはや成立せぬ。当該奉納口を恒久的に廃棄せよ。直ちに特殊強化コンクリートによる永久封鎖を実施し、証拠隠滅を完了せよ。」</p>
+                </div>
+            </div>
+
+            <div class="entry">
+                <span class="entry-title">4. 永久封鎖の実施（組合対応）</span>
+                <div class="action-block">
+                    <span class="action-label">【実施】</span>
+                    <p>御臥山管理局の指示に従い、復旧させたばかりの奉納口に対しコンクリート三層打設を開始。入り口を鉛板で遮蔽し、完全に封鎖した。地表部は「環境保護区域」として擬装し、保守点検ルートを管理局直轄へ移管した。</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div class="status-footer">&lt; 18/23 &gt; (Lv.3)</div>
+    <footer><p>このサイトの内容はフィクションです。実在の人物・団体とは一切関係ありません。</p></footer>
+
+    <script>
+        function handleSearch(event) {
+            event.preventDefault(); 
+            const query = document.getElementById('search-input').value.trim();
+            window.location.href = 'search.html?q=' + encodeURIComponent(query);
+        }
+    </script>
+</body>
+</html>

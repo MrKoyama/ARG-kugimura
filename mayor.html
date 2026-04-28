@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>村長から - 久木村観光復興サイト</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- 共通スタイル --- */
+        body { font-family: 'Noto Sans JP', sans-serif; font-weight: 400; margin: 0; padding: 0; background-color: #f4f1ea; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; background-color: #ffffff; border-bottom: 3px solid #3c5a24; }
+        .logo { font-size: 26px; font-weight: 700; color: #3c5a24; text-decoration: none; display: flex; align-items: center; letter-spacing: 2px; line-height: 1; }
+        .logo-image { height: 42px !important; width: auto; margin-right: 12px; display: block; position: relative; top: -1px; }
+        .search-container { display: flex; }
+        .search-container input[type="text"] { font-family: 'Noto Sans JP', sans-serif; padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px 0 0 4px; outline: none; width: 200px; }
+        .search-container button { font-family: 'Noto Sans JP', sans-serif; font-weight: 500; padding: 8px 16px; background-color: #3c5a24; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer; }
+        nav { background-color: #3c5a24; }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; }
+        
+        /* 修正：左側にも縦線を追加し、デザインを統一 */
+        nav li { border-left: 1px solid #5a803a; }
+        nav li:last-child { border-right: 1px solid #5a803a; }
+
+        nav a { display: block; padding: 15px 40px; color: #ffffff; text-decoration: none; font-weight: 500; font-size: 16px; letter-spacing: 1px; }
+
+        /* --- メインコンテンツ --- */
+        main { padding: 40px 20px; max-width: 1000px; margin: 0 auto; flex-grow: 1; }
+        
+        /* 村長の画像とメッセージのレイアウト */
+        .mayor-container { display: flex; gap: 40px; align-items: flex-start; margin-bottom: 50px; background: #ffffff; padding: 40px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .mayor-photo { width: 400px; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .mayor-message { flex-grow: 1; line-height: 2.2; letter-spacing: 0.5px; }
+        .mayor-title { margin-bottom: 30px; border-bottom: 2px solid #3c5a24; padding-bottom: 15px; }
+        .mayor-title h1 { color: #3c5a24; font-size: 32px; margin: 0; }
+        .mayor-name { font-size: 18px; color: #666; margin-top: 5px; }
+
+        .message-content h2 { font-size: 24px; color: #3c5a24; margin-bottom: 30px; font-weight: 700; }
+        .message-content p { margin-bottom: 25px; text-align: justify; }
+
+        /* ステータスフッター */
+        .status-footer { text-align: right; padding: 10px 40px; background-color: #f4f1ea; font-family: 'Courier New', Courier, monospace; font-size: 14px; color: #999; letter-spacing: 1px; }
+        footer { background-color: #2c2c2c; color: #b0b0b0; text-align: center; padding: 20px 0; font-size: 13px; margin-top: 40px; }
+        footer p { margin: 0 !important; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="logo" class="logo-image">
+            久木村観光復興サイト
+        </a>
+        <div class="search-container">
+            <form id="site-search" onsubmit="handleSearch(event)">
+                <input type="text" id="search-input" placeholder="サイト内検索..." required>
+                <button type="submit">検索</button>
+            </form>
+        </div>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="about.html">村について</a></li>
+            <li><a href="specialty.html">特産品について</a></li>
+            <li><a href="festival.html">お祭りについて</a></li>
+            <li><a href="mayor.html">村長から</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="mayor-container">
+            <img src="images/mayor.png" alt="村長 守谷茂吉" class="mayor-photo">
+            <div class="mayor-message">
+                <div class="mayor-title">
+                    <h1>村長から皆様へ</h1>
+                    <div class="mayor-name">久木村村長　守谷 茂吉（もりや しげよし）</div>
+                </div>
+                <section class="message-content">
+                    <h2>「山懐に抱かれた、安らぎの郷へ」</h2>
+                    
+                    <p>皆様、ようこそ久木村へ。</p>
+                    
+                    <p>私たちの村は、雄大な自然と古き良き伝統が息づく、小さな、けれど温かな共同体です。都会の喧騒を離れ、この地の澄んだ空気と、豊かな山の幸に身を委ねてみてください。きっと、忘れていた心の平穏を取り戻していただけることでしょう。</p>
+                    
+                    <p>当村には、この平穏を次世代へ繋ぐための<strong>村の掟</strong>がございます。初めてお越しになる方には、少々古めかしく感じられる決まりごともあるかもしれませんが、これらはすべて、皆様に安全に、そして健やかに滞在していただくための知恵にほかなりません。</p>
+                    
+                    <p>どうぞ、郷に入りては郷に従い、心ゆくまで久木の夜をお楽しみください。私をはじめ村人一同、皆様との素晴らしい出会いを心より歓迎いたします。</p>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div class="status-footer">&lt; 5/23 &gt; (Lv.0)</div>
+    <footer><p>このサイトの内容はフィクションです。実在の人物・団体とは一切関係ありません。</p></footer>
+
+    <script>
+        function handleSearch(event) {
+            event.preventDefault(); 
+            const query = document.getElementById('search-input').value.trim();
+            window.location.href = 'search.html?q=' + encodeURIComponent(query);
+        }
+    </script>
+</body>
+</html>

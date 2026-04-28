@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【事案共有】第42回帰依山祭における不備 - 久木村 住民管理ポータル</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- [裏] 統一テンプレート --- */
+        body { 
+            font-family: 'Shippori Mincho', serif; 
+            margin: 0; padding: 0; 
+            background-color: #0a0a0a; 
+            color: #d0d0d0; 
+            display: flex; flex-direction: column; min-height: 100vh; 
+        }
+
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px 40px; background-color: #000; 
+            border-bottom: 2px solid #600; z-index: 10; 
+        }
+        
+        .logo { 
+            font-size: 26px; font-weight: 700; color: #800; 
+            text-decoration: none; display: flex; align-items: center; 
+            letter-spacing: 2px; line-height: 1; 
+        }
+        
+        .logo-image { 
+            height: 42px !important; width: auto; margin-right: 12px; 
+            filter: brightness(0) saturate(100%) invert(10%) sepia(94%) saturate(7400%) hue-rotate(0deg) brightness(91%) contrast(124%); 
+        }
+        
+        .search-container { display: flex; }
+        .search-container input[type="text"] { padding: 8px 12px; border: 1px solid #300; background: #111; color: #eee; border-radius: 4px 0 0 4px; outline: none; width: 200px; }
+        .search-container button { padding: 8px 16px; background-color: #800; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer; }
+
+        main { padding: 60px 20px; max-width: 900px; margin: 0 auto; flex-grow: 1; width: 100%; box-sizing: border-box; }
+        
+        .page-title { 
+            color: #a00; border-left: 8px solid #600; 
+            padding-left: 15px; margin-bottom: 40px; 
+            font-size: 24px; font-weight: 700;
+        }
+
+        .report-container { 
+            background: #111; padding: 40px; border-radius: 8px; 
+            border: 1px solid #300; line-height: 1.8;
+        }
+
+        h2 { color: #800; font-size: 1.2rem; border-bottom: 1px solid #400; padding-bottom: 5px; margin-top: 30px; }
+        
+        .section { margin-bottom: 25px; }
+        .section-label { font-weight: 700; color: #a00; display: block; margin-bottom: 5px; }
+
+        .important-block {
+            border: 1px solid #800; background: #200;
+            padding: 15px; margin: 20px 0; border-radius: 4px;
+        }
+
+        .warning-box {
+            border: 2px solid #f00; background: #000;
+            padding: 20px; margin-top: 40px;
+            color: #f00; font-weight: bold;
+        }
+
+        .status-footer { 
+            text-align: right; padding: 10px 40px; 
+            font-family: 'Courier New', monospace; font-size: 14px; 
+            color: #999; font-weight: bold;
+        }
+
+        footer { background-color: #050505; color: #666; text-align: center; padding: 20px 0; font-size: 13px; border-top: 1px solid #300; }
+        
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 1px, transparent 1px, transparent 2px);
+            pointer-events: none; z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="logo" class="logo-image">
+            久木村 住民管理ポータル
+        </a>
+        <div class="search-container">
+            <form id="site-search" onsubmit="handleSearch(event)">
+                <input type="text" id="search-input" placeholder="サイト内検索..." required>
+                <button type="submit">検索</button>
+            </form>
+        </div>
+    </header>
+
+    <main>
+        <h1 class="page-title">宵の静寂における作業上の注意</h1>
+
+        <div class="report-container">
+            <div class="important-block">
+                【事案共有：第42回 帰依山祭における「覗き」の発生】
+            </div>
+
+            <h2>● 発生状況</h2>
+            <div class="section">
+                <p>宿「くき屋」203号室に宿泊中の客（20代男性）が、17:15頃、遮光カーテンの隙間から奉納列（御臥山行きの運搬車両）を視認。客はパニックを起こし、窓を叩いて外部に助けを求めた。</p>
+            </div>
+
+            <h2>● 対応</h2>
+            <div class="section">
+                <p>誘導班が即座に室内へ突入。規定量の「クギワラ濃縮液」を強制投与し、沈静化を確認。予定より早めて、<strong>第二奉納口</strong>へ搬送した。</p>
+            </div>
+
+            <h2>● 反省点と指導</h2>
+            <div class="section">
+                <ul>
+                    <li>宿泊担当は、チェックイン時に「山神様は光と音を嫌うため、外を見ると目が潰れる」等の土着的な恐怖を十分に植え付けておくこと。</li>
+                    <li>カーテンの隙間はあらかじめ養生テープ等で固定し、物理的に開放できない措置を講ずること。</li>
+                    <li>万一、客に「作業」を見られた場合、その客も直ちに処理すること。</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                【警告】<br>
+                宵の静寂は、村の「食事」を邪魔させないための重要な儀式である。目撃者の放置は、外部（警察・ネット等）への情報漏洩に直結し、村の存続を脅かす。徹底せよ。
+            </div>
+        </div>
+    </main>
+
+    <div class="status-footer">&lt; 8/23 &gt; (Lv.1)</div>
+    <footer><p>このサイトの内容はフィクションです。実在の人物・団体とは一切関係ありません。</p></footer>
+
+    <script>
+        function handleSearch(event) {
+            event.preventDefault(); 
+            const query = document.getElementById('search-input').value.trim();
+            window.location.href = 'search.html?q=' + encodeURIComponent(query);
+        }
+    </script>
+</body>
+</html>

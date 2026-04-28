@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【報告】御臥山周辺における騒音苦情への対応 - 久木村 住民管理ポータル</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- [裏] 統一テンプレート --- */
+        body { 
+            font-family: 'Shippori Mincho', serif; 
+            margin: 0; padding: 0; 
+            background-color: #0a0a0a; 
+            color: #d0d0d0; 
+            display: flex; flex-direction: column; min-height: 100vh; 
+        }
+
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px 40px; background-color: #000; 
+            border-bottom: 2px solid #600; z-index: 10; 
+        }
+        
+        .logo { 
+            font-size: 26px; font-weight: 700; color: #800; 
+            text-decoration: none; display: flex; align-items: center; 
+            letter-spacing: 2px; line-height: 1; 
+        }
+        
+        .logo-image { 
+            height: 42px !important; width: auto; margin-right: 12px; 
+            filter: brightness(0) saturate(100%) invert(10%) sepia(94%) saturate(7400%) hue-rotate(0deg) brightness(91%) contrast(124%); 
+        }
+        
+        .search-container { display: flex; }
+        .search-container input[type="text"] { padding: 8px 12px; border: 1px solid #300; background: #111; color: #eee; border-radius: 4px 0 0 4px; outline: none; width: 200px; }
+        .search-container button { padding: 8px 16px; background-color: #800; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer; }
+
+        main { padding: 60px 20px; max-width: 900px; margin: 0 auto; flex-grow: 1; width: 100%; box-sizing: border-box; }
+        
+        .page-title { 
+            color: #a00; border-left: 8px solid #600; 
+            padding-left: 15px; margin-bottom: 40px; 
+            font-size: 24px; font-weight: 700;
+        }
+
+        .document-container { 
+            background: #111; padding: 40px; border-radius: 8px; 
+            border: 1px solid #300; line-height: 1.8;
+        }
+
+        .doc-header { text-align: right; margin-bottom: 30px; font-size: 0.9rem; color: #777; }
+        
+        /* 修正：鉄壁の隠蔽（選択不可・中身透明） */
+        .masked { 
+            background-color: #333; 
+            color: transparent; 
+            display: inline-block; 
+            padding: 0 4px; 
+            border-radius: 2px;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+
+        h2 { color: #800; font-size: 1.25rem; border-bottom: 1px solid #444; padding-bottom: 8px; margin-top: 30px; }
+        
+        .content-section { margin-bottom: 25px; }
+        
+        .status-footer { 
+            text-align: right; padding: 10px 40px; 
+            font-family: 'Courier New', monospace; font-size: 14px; 
+            color: #999; font-weight: bold;
+        }
+
+        footer { background-color: #050505; color: #666; text-align: center; padding: 20px 0; font-size: 13px; border-top: 1px solid #300; }
+        
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 1px, transparent 1px, transparent 2px);
+            pointer-events: none; z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="logo" class="logo-image">
+            久木村 住民管理ポータル
+        </a>
+        <div class="search-container">
+            <form id="site-search" onsubmit="handleSearch(event)">
+                <input type="text" id="search-input" placeholder="サイト内検索..." required>
+                <button type="submit">検索</button>
+            </form>
+        </div>
+    </header>
+
+    <main>
+        <h1 class="page-title">御臥山周辺における騒音苦情報告</h1>
+
+        <div class="document-container">
+            <div class="doc-header">
+                文書番号：<span class="masked">久環保第1104号</span><br>
+                発行：<span class="masked">御臥山環境保全組合</span>
+            </div>
+
+            <p>祭事期間中、宿泊施設利用者および近隣住民より「御臥山(おふしやま)方面より不快な音が聞こえる」との苦情が頻発している。これを受け、原因究明と適切な処置を検討されたい。</p>
+
+            <h2>1. 苦情の概要</h2>
+            <div class="content-section">
+                <ul>
+                    <li><strong>発生頻度：</strong> 深夜帯（23時以降）に集中。</li>
+                    <li><strong>報告された音：</strong> 低周波の響き、地鳴りのような音。</li>
+                    <li><strong>主な申告元：</strong> 宿「くき屋」 2F/3F客室。</li>
+                </ul>
+            </div>
+
+            <h2>2. 現地調査および見解</h2>
+            <div class="content-section">
+                <p>当該期間中は山間部の地質活動が活発化しており、自然現象としての<strong> 山鳴り </strong>であると推測される。しかし、滞在者の快適な環境を維持するため、事態の沈静化に向けた調整が必要である。</p>
+            </div>
+
+            <h2>3. 今後の対応計画</h2>
+            <div class="content-section">
+                <p><span class="masked">御臥山環境保全組合</span>は、現地音源の特定を急ぎ、適切な遮蔽措置、あるいは音源そのものの調整を行うこと。また、宿泊施設側には、利用者への周知および対策品の提供について別途指示を出すものとする。</p>
+            </div>
+
+            <p style="margin-top:40px; font-size: 0.9rem; color: #666;">
+                承認印：守谷 茂吉
+            </p>
+        </div>
+    </main>
+
+    <div class="status-footer">&lt; 12/23 &gt; (Lv.2)</div>
+    <footer><p>このサイトの内容はフィクションです。実在の人物・団体とは一切関係ありません。</p></footer>
+
+    <script>
+        function handleSearch(event) {
+            event.preventDefault(); 
+            const query = document.getElementById('search-input').value.trim();
+            window.location.href = 'search.html?q=' + encodeURIComponent(query);
+        }
+    </script>
+</body>
+</html>

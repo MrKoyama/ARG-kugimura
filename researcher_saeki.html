@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PERSONNEL_FILE: SAEKI_KOJI - National Institute of Mycology</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+JP:wght@300;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* --- [裏] 研究所データベース（Lv.4） --- */
+        html, body { height: 100%; margin: 0; padding: 0; }
+
+        body { 
+            font-family: 'Noto Sans JP', sans-serif; 
+            background-color: #000810; 
+            color: #88ccff; 
+            display: flex; flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* グリッド背景 */
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(0deg, rgba(0, 136, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 136, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px; pointer-events: none;
+        }
+
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 10px 40px; background-color: rgba(0, 20, 40, 0.95); 
+            border-bottom: 2px solid #0055aa; z-index: 10;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .inst-logo { font-size: 18px; color: #00aaff; letter-spacing: 2px; }
+
+        /* 統合検索フォーム */
+        .search-container { display: flex; }
+        .search-container input[type="text"] { 
+            padding: 8px 12px; border: 1px solid #0055aa; background: #000; color: #00ff88; 
+            border-radius: 4px 0 0 4px; outline: none; width: 250px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+        .search-container button { 
+            padding: 8px 16px; background-color: #0055aa; color: white; border: none; 
+            border-radius: 0 4px 4px 0; cursor: pointer; font-family: 'Orbitron', sans-serif;
+        }
+
+        main { padding: 40px; max-width: 1100px; margin: 0 auto; flex: 1; z-index: 5; }
+
+        .profile-header {
+            display: flex; align-items: flex-end; margin-bottom: 30px;
+            border-left: 5px solid #00aaff; padding-left: 20px;
+        }
+
+        .name-en { font-family: 'Orbitron', sans-serif; font-size: 2.5rem; margin-right: 20px; color: #fff; }
+        .name-jp { font-size: 1.2rem; margin-bottom: 8px; }
+
+        .content-grid {
+            display: grid; grid-template-columns: 2fr 1.2fr; gap: 30px;
+        }
+
+        .image-frame {
+            background: #00152a; border: 1px solid #0055aa; padding: 10px;
+            position: relative; box-shadow: 0 0 30px rgba(0, 170, 255, 0.2);
+            /* 修正：画像サイズに合わせてアスペクト比を設定 */
+            max-width: 1264px;
+            aspect-ratio: 1264 / 842;
+            overflow: hidden; /* フレームからはみ出した部分を隠す */
+        }
+
+        /* 修正：画像の上に表示するラベルのスタイル */
+        .image-label {
+            position: absolute; top: 15px; left: 15px;
+            background: rgba(0, 8, 16, 0.8); color: #00aaff;
+            padding: 5px 10px; font-size: 12px; border: 1px solid #00aaff;
+            z-index: 2; font-weight: bold;
+        }
+
+        .desk-image {
+            width: 100%; height: auto; display: block;
+            filter: brightness(0.7) contrast(1.1);
+            /* 修正：フレームに収まるように画像をフィットさせる */
+            object-fit: cover;
+            position: absolute; /* 親要素に対して絶対配置 */
+            top: 10px; left: 10px; /* パディング分を考慮 */
+            right: 10px; bottom: 10px;
+            width: calc(100% - 20px); height: calc(100% - 20px);
+        }
+
+        .scan-line {
+            position: absolute; top: 10px; left: 10px; width: calc(100% - 20px); height: 2px;
+            background: rgba(0, 255, 255, 0.3); box-shadow: 0 0 10px #0ff;
+            animation: scan 4s linear infinite;
+            /* 修正：画像の上に表示されるようにz-indexを追加 */
+            z-index: 1; 
+        }
+
+        @keyframes scan { 0% { top: 10px; } 100% { top: calc(100% - 10px); } }
+
+        .data-panel {
+            background: rgba(0, 30, 60, 0.8); border: 1px solid #0055aa; padding: 25px;
+            font-size: 0.95rem; line-height: 1.8;
+        }
+
+        .label { color: #00aaff; font-weight: bold; font-size: 0.8rem; display: block; margin-top: 20px; }
+
+        /* ページ下部情報 */
+        .status-footer { text-align: right; padding: 10px 40px; font-family: 'Orbitron', sans-serif; font-size: 14px; color: #0055aa; font-weight: bold; }
+
+        footer { 
+            background-color: #000; color: #fff; text-align: center; 
+            padding: 20px 0; font-size: 12px; z-index: 101; 
+            border-top: 1px solid #002244;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="inst-logo">NATIONAL MYCOLOGY DB</div>
+        <div class="search-container">
+            <form id="site-search" onsubmit="handleSearch(event)">
+                <input type="text" id="search-input" placeholder="ENTER SEARCH_QUERY..." required>
+                <button type="submit">QUERY</button>
+            </form>
+        </div>
+    </header>
+
+    <main>
+        <div class="profile-header">
+            <span class="name-en">SAEKI_KOJI</span>
+            <span class="name-jp">主任研究員：佐伯 浩二</span>
+        </div>
+
+        <div class="content-grid">
+            <div class="image-frame">
+                <div class="image-label">佐伯氏のデスク</div>
+                <div class="scan-line"></div>
+                <img src="images/saeki_desk.png" alt="佐伯浩二のデスク" class="desk-image">
+            </div>
+
+            <div class="data-panel">
+                <span class="label">ASSIGNMENT</span>
+                特殊生物資源開発部 / 御臥山プロジェクト
+                
+                <span class="label">CURRENT STATUS</span>
+                <span style="color: #ffaa00;">久木村・守谷邸にて検体No.104を観測中</span>
+
+                <span class="label">LOG_MEMO [19XX/08/12]</span>
+                「村長（守谷氏）との契約更新完了。86,000,000円の振込を確認。今期の『サンプル（給仕）』は非常に質が高い。菌糸の定着率が以前より15%向上している。」
+                
+                <hr style="border: 0; border-top: 1px solid #004488; margin: 25px 0;">
+                
+                <span class="label" style="color:#ff4444;">SECURITY WARNING</span>
+                <p style="font-size: 0.8rem;">本研究データの無断持ち出し、および村落住民への情報漏洩は『不浄物処理』の対象となります。</p>
+            </div>
+        </div>
+    </main>
+
+    <div class="status-footer">&lt; 21/23 &gt; (Lv.4)</div>
+    
+    <footer>このサイトの内容はフィクションです。実在の人物・団体とは一切関係ありません。</footer>
+
+    <script>
+        function handleSearch(event) {
+            event.preventDefault(); 
+            const query = document.getElementById('search-input').value.trim();
+            // 検索結果ページへの遷移（必要に応じてパス調整）
+            window.location.href = 'search.html?q=' + encodeURIComponent(query);
+        }
+    </script>
+</body>
+</html>

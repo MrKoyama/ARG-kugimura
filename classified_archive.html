@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>覚書（案） - 御臥山管理局 機密アーカイブ</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        /* --- [裏] 統一テンプレート（Lv.4：重要機密） --- */
+
+        body {
+
+            font-family: 'Shippori Mincho', serif;
+
+            margin: 0; padding: 0;
+
+            background-color: #050505;
+
+            color: #ccc;
+
+            display: flex; flex-direction: column; min-height: 100vh;
+
+        }
+
+
+
+        header {
+
+            display: flex; justify-content: space-between; align-items: center;
+
+            padding: 15px 40px; background-color: #000;
+
+            border-bottom: 2px solid #800; z-index: 10;
+
+        }
+
+       
+
+        .logo { font-size: 26px; font-weight: 700; color: #a00; text-decoration: none; letter-spacing: 2px; }
+
+       
+
+        main { padding: 60px 20px; max-width: 800px; margin: 0 auto; flex-grow: 1; }
+
+       
+
+        .document-container {
+
+            background: #fff; /* 書類なので白背景 */
+
+            color: #111;
+
+            padding: 60px 80px;
+
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+
+            line-height: 2;
+
+            position: relative;
+
+            overflow: hidden;
+
+        }
+
+
+
+        /* 古い書類の質感を出すための汚れ */
+
+        .document-container::after {
+
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+
+            background: rgba(150, 100, 50, 0.05); pointer-events: none;
+
+        }
+
+
+
+        .doc-header { text-align: center; font-size: 1.8rem; font-weight: 700; margin-bottom: 50px; text-decoration: underline; }
+
+       
+
+        .clause { margin-bottom: 25px; }
+
+        .clause-title { font-weight: 700; display: block; }
+
+
+
+        .masked { background-color: #333; color: #333; padding: 0 4px; }
+
+
+
+        /* 捺印エリア */
+
+        .seal-area {
+
+            margin-top: 60px;
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 50px;
+
+        }
+
+        .signature-block { text-align: left; }
+
+        .seal {
+
+            display: inline-block;
+
+            width: 60px; height: 60px;
+
+            border: 2px solid #c33;
+
+            border-radius: 50%;
+
+            color: #c33;
+
+            text-align: center;
+
+            line-height: 60px;
+
+            font-weight: bold;
+
+            font-family: 'serif';
+
+            margin-left: 10px;
+
+            opacity: 0.8;
+
+            transform: rotate(-10deg); /* リアルな押し方 */
+
+            user-select: none;
+
+        }
+
+
+
+        .status-footer { text-align: right; padding: 10px 40px; color: #666; font-family: monospace; }
+
+        footer { background-color: #000; color: #fff; text-align: center; padding: 15px 0; font-size: 12px; }
+
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+
+        <div class="logo">御臥山管理局 機密アーカイブ</div>
+
+    </header>
+
+
+
+    <main>
+
+        <div class="document-container">
+
+            <div class="doc-header">覚　書</div>
+
+
+
+            <p>久木村村長（以下「甲」とする）と、国立菌類研究所・佐伯浩二（以下「乙」とする）は、御臥山に生息する特殊菌体（以下「<span class="god-name">オフシ様</span>」とする）の調査研究、および村落の維持発展に関し、以下の通り合意する。</p>
+
+
+
+            <div class="clause">
+
+                <span class="clause-title">第1条（研究への協力）</span>
+
+                甲は、乙が実施する「<span class="god-name">オフシ様</span>」の生態調査、サンプル採取、および周辺環境の計測活動を全面的に支援する。これには、第一および第二奉納口への立ち入り権限を含むものとする。
+
+            </div>
+
+
+
+            <div class="clause">
+
+                <span class="clause-title">第2条（検体の回収）</span>
+
+                乙は、奉納儀礼後に生じる「未摂取検体（ヒト由来サンプル）」を、研究資料として優先的に回収・運搬する権利を有する。回収された検体は、乙の管理する施設において処理される。
+
+            </div>
+
+
+
+            <div class="clause">
+
+                <span class="clause-title">第3条（経済的支援）</span>
+
+                乙は、本研究への協力の対価として、甲に対し「御臥山広域環境復興支援金」の名目で、年額86,000,000円を支払う。使途については甲の裁量に委ねるものとする。
+
+            </div>
+
+
+
+            <div class="clause">
+
+                <span class="clause-title">第4条（秘密保持）</span>
+
+                本覚書の内容、および「<span class="god-name">オフシ様</span>」の摂取プロセス、検体回収の実態については、第三者（村外および公的機関）に対し一切秘匿するものとする。
+
+            </div>
+
+
+
+            <p style="margin-top: 50px;">昭和XX年 X月 X日</p>
+
+
+
+            <div class="seal-area">
+
+                <div class="signature-block">
+
+                    （甲）久木村村長<br>
+
+                    守谷 茂吉
+
+                    <div class="seal">守谷</div>
+
+                </div>
+
+                <div class="signature-block">
+
+                    （乙）国立菌類研究所<br>
+
+                    佐伯 浩二
+
+                    <div class="seal">佐伯</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <div class="status-footer">&lt; 20/23 &gt; (Lv.4)</div>
+
+    <footer>このサイトの内容はフィクションです。実在の人物・団体とは一切関係ありません。</footer>
+
+</body>
+
+</html>

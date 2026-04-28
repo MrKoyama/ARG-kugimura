@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>検索結果 - 久木村 住民管理ポータル</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@400;700&family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* --- [表] 基本スタイル --- */
+        body { font-family: 'Noto Sans JP', sans-serif; margin: 0; padding: 0; background-color: #f4f1ea; color: #333; display: flex; flex-direction: column; min-height: 100vh; transition: all 0.5s; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; background-color: #ffffff; border-bottom: 3px solid #3c5a24; z-index: 10; transition: all 0.5s; }
+        .logo { font-size: 26px; font-weight: 700; color: #3c5a24; text-decoration: none; display: flex; align-items: center; letter-spacing: 2px; transition: color 0.5s; }
+        .logo-image { height: 42px !important; width: auto; margin-right: 12px; display: block; transition: filter 0.5s; }
+        .search-container { display: flex; }
+        .search-container input[type="text"] { padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px 0 0 4px; outline: none; width: 200px; background: white; color: #333; }
+        .search-container button { padding: 8px 16px; background-color: #3c5a24; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer; transition: background-color 0.5s; }
+        nav { background-color: #3c5a24; transition: opacity 0.5s; }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; }
+        nav a { display: block; padding: 15px 40px; color: #ffffff; text-decoration: none; font-size: 16px; }
+        main { padding: 40px 20px; max-width: 800px; margin: 0 auto; flex-grow: 1; width: 100%; box-sizing: border-box; }
+        .search-header { margin-bottom: 30px; border-bottom: 2px solid #3c5a24; padding-bottom: 15px; }
+        .query-text { color: #3c5a24; font-weight: 700; }
+        .result-item { background: white; padding: 20px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .result-item a { font-size: 18px; font-weight: 700; color: #1a0dab; text-decoration: underline; display: block; margin-bottom: 8px; }
+        #no-result-message { display: none; background: white; padding: 40px; border-radius: 4px; }
+        footer { background-color: #2c2c2c; color: #b0b0b0; text-align: center; padding: 20px 0; font-size: 13px; border-top: 1px solid #333; }
+
+        /* --- [裏] ダークモード（村の機密） --- */
+        body.dark-mode { background-color: #0a0a0a; color: #d0d0d0; font-family: 'Shippori Mincho', serif; }
+        body.dark-mode header { background-color: #000; border-bottom: 2px solid #600; }
+        body.dark-mode .logo { color: #800; }
+        body.dark-mode .logo-image { filter: brightness(0) saturate(100%) invert(10%) sepia(94%) saturate(7400%) hue-rotate(0deg) brightness(91%) contrast(124%); }
+        body.dark-mode .search-container input[type="text"] { border: 1px solid #300; background: #111; color: #eee; }
+        body.dark-mode .search-container button { background-color: #800; }
+        body.dark-mode nav { display: none; }
+        body.dark-mode .search-header { border-bottom: 1px solid #600; }
+        body.dark-mode .query-text { color: #a00; }
+        body.dark-mode .result-item { background: #111; border: 1px solid #300; }
+        body.dark-mode .result-item a { color: #e00; }
+
+        /* --- [真] 研究所モード（青） --- */
+        body.inst-mode { background-color: #000810; color: #88ccff; font-family: 'Noto Sans JP', sans-serif; }
+        body.inst-mode header { background-color: #00152a; border-bottom: 2px solid #0055aa; }
+        body.inst-mode .logo { color: #00aaff; font-family: 'Orbitron', sans-serif; font-size: 18px; }
+        body.inst-mode .logo-image { filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(175deg) brightness(101%) contrast(101%); }
+        body.inst-mode .search-container input[type="text"] { border: 1px solid #0055aa; background: #000; color: #00ff88; font-family: 'Share Tech Mono', monospace; }
+        body.inst-mode .search-container button { background-color: #0055aa; }
+        body.inst-mode nav { display: none; }
+        body.inst-mode .search-header { border-bottom: 1px solid #0055aa; }
+        body.inst-mode .query-text { color: #00ff88; font-family: 'Orbitron', sans-serif; }
+        body.inst-mode .result-item { background: rgba(0, 30, 60, 0.8); border: 1px solid #0055aa; box-shadow: 0 0 15px rgba(0, 170, 255, 0.3); }
+        body.inst-mode .result-item a { color: #fff; text-decoration: none; border-bottom: 1px solid #00aaff; }
+        body.inst-mode .result-item p { color: #88ccff; }
+    </style>
+</head>
+<body id="body-tag">
+    <header>
+        <a href="index.html" class="logo" id="site-logo-text">
+            <img src="images/logo.png" alt="久木村 村紋" class="logo-image">
+            久木村観光復興サイト
+        </a>
+        <div class="search-container">
+            <form id="site-search" onsubmit="handleSearch(event)">
+                <input type="text" id="search-input" placeholder="サイト内検索..." required>
+                <button type="submit">検索</button>
+            </form>
+        </div>
+    </header>
+    <nav id="top-nav">
+        <ul>
+            <li><a href="about.html">村について</a></li>
+            <li><a href="specialty.html">特産品について</a></li>
+            <li><a href="festival.html">お祭りについて</a></li>
+            <li><a href="mayor.html">村長から</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="search-header">
+            <h1>「<span id="display-query" class="query-text"></span>」の検索結果</h1>
+        </div>
+        <div id="result-container"></div>
+        <div id="no-result-message">
+            <p><strong>お探しのページは見つかりませんでした。</strong></p>
+            <p>入力したキーワードに誤りがないかご確認ください。</p>
+        </div>
+    </main>
+
+    <footer><p>このサイトの内容はフィクションです。実在の人物・団体とは一切関係ありません。</p></footer>
+
+    <script>
+        const searchDatabase = {
+            "御臥山環境保全組合": [ { title: "第一奉納口：特殊保全業務 完了報告書", url: "conservation_log_01.html", description: "1. 現場清掃および遺留品回収（組合対応）" }],
+            "村の掟": [{ title: "久木村住民規範要綱", url: "okite.html", description: "第一条（山の恵みの享受）" }],
+            "宵の静寂": [{ title: "宵の静寂における作業上の注意", url: "shijima.html", description: "【事案共有：第42回 帰依山祭における「覗き」の発生】" }],
+            "第二奉納口": [{ title: "第二奉納口 供物管理名簿", url: "daini-honoguchi.html", description: "直近3回の祭事分を含む未処理・処理済み混合名簿" }],
+            "第一奉納口": [{ title: "特例事案報告書：第一奉納口 転落事故", url: "incident.html", description: "本資料は、旧・第一奉納口において発生した転落事故、およびそれに伴う運用方針の抜本的変…" }],
+            "御臥山": [{ title: "御臥山周辺における騒音苦情報告", url: "ofushiyama.html", description: "祭事期間中、宿泊施設利用者および近隣住民より「御臥山（おふしやま）方面より不快な音が…" }],
+            "御臥山管理局": [{ title: "御臥山管理局 重要機密ファイル", url: "login.html", description: "パスコード認証が必要です。" }],
+            "山鳴り": [{ title: "御臥山音響事案の真因および奉納計画の変更", url: "yamanari.html", description: "■■■■■■■■■にて報告された騒音事案について、非公開領域での観測結果に基づ…" }],
+            "オフシ様": [{ title: "郷土資料：御臥山大権現 秘伝記", url: "myth.html", description: "古き記録によれば、その御方は 二つの山が火を吹いた 後に、東の空から落ちてきた「星」であ…" }],
+            "新編供犠村風土記": [{ title: "郷土資料：地名改称に関する記録", url: "kugimura_archive.html", description: "【画像】" }],
+            "供犠村": [{ title: "【内部秘匿資料】供犠村の掟", url: "kugi_rules.html", description: "第一条：給仕の義" }],
+            "クギワラ粥": [{ title: "供食管理手順書：特殊祭事用「クギワラ粥」", url: "kugiwaragayu.html", description: "本マニュアルは、祭事期間中における滞在者の「山との同期」を促進し、選別および誘導を…" }],
+            "守谷茂吉": [{ title: "内部通信記録（復元データ）", url: "memo_moriya.html", description: "INTERNAL_COMM: RE_PROCESS_LOG" }],
+            "クギワラタケ": [{ title: "住民管理用参照資料：クギワラタケ（分析データ）", url: "data_kugiwara.html", description: "【画像】" }],
+            
+            // 研究所トリガー
+            "佐伯浩二": [{ title: "PERSONNEL_FILE: SAEKI_KOJI", url: "researcher_saeki.html", description: "主任研究員。特殊生物資源開発部。OF-04個体群の観測担当。" }],
+            "国立菌類研究所": [{ title: "国立菌学研究所 中央アセットアクセスターミナル", url: "login_inst.html", description: "村長・守谷氏との間で交わされた契約書。" }]
+        };
+
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            const query = params.get('q');
+            const bodyTag = document.getElementById('body-tag');
+            const resultContainer = document.getElementById('result-container');
+            const noResultBox = document.getElementById('no-result-message');
+            const siteLogoText = document.getElementById('site-logo-text');
+
+            if (query) {
+                document.getElementById('display-query').textContent = query;
+                
+                const instKeywords = ["佐伯浩二", "国立菌類研究所"];
+                if (instKeywords.includes(query)) {
+                    bodyTag.classList.add('inst-mode');
+                    siteLogoText.innerHTML = '<img src="images/logo.png" alt="logo" class="logo-image">NATIONAL MYCOLOGY DB';
+                } else if (searchDatabase[query]) {
+                    bodyTag.classList.add('dark-mode');
+                    siteLogoText.innerHTML = '<img src="images/logo.png" alt="logo" class="logo-image">久木村 住民管理ポータル';
+                }
+
+                if (searchDatabase[query]) {
+                    searchDatabase[query].forEach(item => {
+                        const div = document.createElement('div');
+                        div.className = 'result-item';
+                        div.innerHTML = `<a href="${item.url}">${item.title}</a><p>${item.description}</p>`;
+                        resultContainer.appendChild(div);
+                    });
+                } else {
+                    noResultBox.style.display = 'block';
+                }
+            }
+        };
+
+        function handleSearch(event) {
+            event.preventDefault(); 
+            const query = document.getElementById('search-input').value.trim();
+            window.location.href = 'search.html?q=' + encodeURIComponent(query);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>供食管理手順書（クギワラ粥） - 久木村 住民管理ポータル</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- [裏] 統一テンプレート --- */
+        body { 
+            font-family: 'Shippori Mincho', serif; 
+            margin: 0; padding: 0; 
+            background-color: #0a0a0a; 
+            color: #d0d0d0; 
+            display: flex; flex-direction: column; min-height: 100vh; 
+        }
+
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px 40px; background-color: #000; 
+            border-bottom: 2px solid #600; z-index: 10; 
+        }
+        
+        .logo { 
+            font-size: 26px; font-weight: 700; color: #800; 
+            text-decoration: none; display: flex; align-items: center; 
+            letter-spacing: 2px; line-height: 1; 
+        }
+        
+        .logo-image { 
+            height: 42px !important; width: auto; margin-right: 12px; 
+            filter: brightness(0) saturate(100%) invert(10%) sepia(94%) saturate(7400%) hue-rotate(0deg) brightness(91%) contrast(124%); 
+        }
+        
+        .search-container { display: flex; }
+        .search-container input[type="text"] { padding: 8px 12px; border: 1px solid #300; background: #111; color: #eee; border-radius: 4px 0 0 4px; outline: none; width: 200px; }
+        .search-container button { padding: 8px 16px; background-color: #800; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer; }
+
+        main { padding: 60px 20px; max-width: 900px; margin: 0 auto; flex-grow: 1; width: 100%; box-sizing: border-box; }
+        
+        .page-title { 
+            color: #a00; border-left: 8px solid #600; 
+            padding-left: 15px; margin-bottom: 40px; 
+            font-size: 24px; font-weight: 700;
+        }
+
+        .manual-container { 
+            background: #111; padding: 40px; border-radius: 8px; 
+            border: 1px solid #300; line-height: 1.8;
+        }
+
+        h2 { color: #800; font-size: 1.4rem; border-bottom: 1px solid #400; padding-bottom: 10px; margin-top: 30px; }
+        
+        .step { margin-bottom: 25px; }
+        .step-title { font-weight: 700; color: #a00; display: block; margin-bottom: 8px; }
+        
+        /* テーブルの修正：ランク列の改行を禁止 */
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; table-layout: auto; }
+        table th, table td { border: 1px solid #444; padding: 12px 10px; text-align: left; font-size: 0.9rem; }
+        table th { background: #222; color: #a00; }
+        table td:first-child { white-space: nowrap; font-weight: bold; }
+
+        /* 誘導用の目立たない注釈 */
+        .system-note {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #222;
+            color: #555;
+            font-size: 0.8rem;
+            text-align: left;
+        }
+        .system-note a { color: #555; text-decoration: none; }
+        .system-note a:hover { color: #800; text-decoration: underline; }
+
+        .status-footer { 
+            text-align: right; padding: 10px 40px; 
+            font-family: 'Courier New', monospace; font-size: 14px; 
+            color: #999; font-weight: bold;
+        }
+
+        footer { background-color: #050505; color: #666; text-align: center; padding: 20px 0; font-size: 13px; border-top: 1px solid #300; }
+        
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 1px, transparent 1px, transparent 2px);
+            pointer-events: none; z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="logo" class="logo-image">
+            久木村 住民管理ポータル
+        </a>
+        <div class="search-container">
+            <form id="site-search" onsubmit="handleSearch(event)">
+                <input type="text" id="search-input" placeholder="サイト内検索..." required>
+                <button type="submit">検索</button>
+            </form>
+        </div>
+    </header>
+
+    <main>
+        <h1 class="page-title">供食管理手順書：特殊祭事用「クギワラ粥」</h1>
+
+        <div class="manual-container">
+            <p>本マニュアルは、祭事期間中における滞在者の「山との同期」を促進し、選別および誘導を円滑に行うための供食手順を定めたものである。</p>
+
+            <h2>1. 配膳および事前説明</h2>
+            <div class="step">
+                <span class="step-title">1-1. 効能の説明</span>
+                <p>配膳時、滞在者には「村に古くから伝わる滋養強壮に優れた薬膳粥である」と説明せよ。山歩きの疲れを癒やし、心身を活性化させる伝統食として提供し、完食を促すこと。</p>
+            </div>
+            <div class="step">
+                <span class="step-title">1-2. 反応への弁明</span>
+                <p>万が一、摂取後に眩暈や意識の混濁を訴える者が現れた場合は、<strong>「滋養強壮の効果が強く出過ぎた（好転反応）ため、一時的に血の巡りが良くなりすぎている」</strong>と回答し、動揺を抑えよ。</p>
+            </div>
+
+            <h2>2. 滞在者の反応による選別基準</h2>
+            <p><strong>心身の清め（禊）</strong>の時間中、以下の予兆を確認し、適切なランク付けを行うこと。</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>症状ランク</th>
+                        <th>主に見られる変化</th>
+                        <th>適合評価</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ランクA（特）</td>
+                        <td>意識レベルの低下、思考停止。自立歩行が著しく困難。山の方角への執着が顕著。</td>
+                        <td><strong>適合</strong></td>
+                    </tr>
+                    <tr>
+                        <td>ランクB（良）</td>
+                        <td>重度の記憶混濁。自身の氏名や来村経緯に対する忘却。外部刺激への反応が鈍い。</td>
+                        <td>良好</td>
+                    </tr>
+                    <tr>
+                        <td>ランクC（可）</td>
+                        <td>酒酔いに似た多幸感、あるいは足元のふらつき。思考力の低下。</td>
+                        <td>要経過観察</td>
+                    </tr>
+                    <tr>
+                        <td>対象外</td>
+                        <td>変化なし。通常通りの活動。</td>
+                        <td>再検討</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>3. 救護を装った誘導手順</h2>
+            <div class="step">
+                <span class="step-title">3-1. 現場対応</span>
+                <p>ランクA・Bの適合者には、他の滞在者に対し「非常に強い滋養効果により、一時的に気分が悪くなっている。安静が必要なため、設備が整った別室へ案内し応急処置を行う」と告げよ。</p>
+            </div>
+            <div class="step">
+                <span class="step-title">3-2. 物理的移動</span>
+                <p>適合者は思考機能が著しく低下しているため、職員の誘導には基本的には無抵抗である。自立歩行が困難な場合は車椅子、あるいは介助者による両脇抱えにて、速やかに管理区域内の待機室へ連行すること。</p>
+            </div>
+
+            <div class="system-note">
+                ※連行完了後の工程、および管理業務詳細については、別途運用手順書を確認すること。
+            </div>
+        </div>
+    </main>
+
+    <div class="status-footer">&lt; 7/23 &gt; (Lv.1)</div>
+    <footer><p>このサイトの内容はフィクションです。実在の人物・団体とは一切関係ありません。</p></footer>
+
+    <script>
+        function handleSearch(event) {
+            event.preventDefault(); 
+            const query = document.getElementById('search-input').value.trim();
+            window.location.href = 'search.html?q=' + encodeURIComponent(query);
+        }
+    </script>
+</body>
+</html>

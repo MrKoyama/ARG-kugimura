@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>解析資料：OF-04 - 久木村 住民管理ポータル</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- [裏] 久木村ポータル 統一テンプレート --- */
+        body { 
+            font-family: 'Shippori Mincho', serif; 
+            margin: 0; padding: 0; 
+            background-color: #0a0a0a; 
+            color: #d0d0d0; 
+            display: flex; flex-direction: column; min-height: 100vh; 
+        }
+
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px 40px; background-color: #000; 
+            border-bottom: 2px solid #600; z-index: 10; 
+        }
+        
+        .logo { 
+            font-size: 26px; font-weight: 700; color: #800; 
+            text-decoration: none; display: flex; align-items: center; 
+            letter-spacing: 2px; line-height: 1; 
+        }
+        
+        .logo-image { 
+            height: 42px !important; width: auto; margin-right: 12px; 
+            filter: brightness(0) saturate(100%) invert(10%) sepia(94%) saturate(7400%) hue-rotate(0deg) brightness(91%) contrast(124%); 
+        }
+        
+        .search-container { display: flex; }
+        .search-container input[type="text"] { padding: 8px 12px; border: 1px solid #300; background: #111; color: #eee; border-radius: 4px 0 0 4px; outline: none; width: 200px; }
+        .search-container button { padding: 8px 16px; background-color: #800; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer; }
+
+        main { padding: 60px 20px; max-width: 1000px; margin: 0 auto; flex-grow: 1; width: 100%; box-sizing: border-box; }
+        
+        .page-title { 
+            color: #a00; border-left: 8px solid #600; 
+            padding-left: 15px; margin-bottom: 40px; 
+            font-size: 24px; font-weight: 700;
+        }
+
+        .specimen-container { 
+            background: #000; padding: 20px; border-radius: 4px; 
+            border: 1px solid #400; text-align: center;
+        }
+
+        .specimen-image-wrapper {
+            width: 100%;
+            max-width: 1236px;
+            margin: 0 auto;
+            border: 1px solid #222;
+            line-height: 0;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .specimen-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* 修正：提供元の黒塗り設定 */
+        .source-credit {
+            margin-top: 15px;
+            text-align: right;
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .redacted {
+            background-color: #1a1a1a; /* ほぼ黒 */
+            color: #1a1a1a;           /* 文字も同色 */
+            padding: 0 5px;
+            margin: 0 2px;
+            display: inline-block;
+            line-height: 1.2;
+            cursor: default;
+            user-select: none;        /* マウス選択不可 */
+            pointer-events: none;      /* クリック等不可 */
+        }
+
+        /* 修正：管理者注記のスリム化 */
+        .system-note {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(136, 0, 0, 0.05);
+            border: 1px dashed #300;
+            color: #888;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .status-footer { 
+            text-align: right; padding: 10px 40px; 
+            font-family: 'Courier New', monospace; font-size: 14px; 
+            color: #999; font-weight: bold;
+        }
+
+        footer { background-color: #050505; color: #666; text-align: center; padding: 20px 0; font-size: 13px; border-top: 1px solid #300; }
+        
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 1px, transparent 1px, transparent 2px);
+            pointer-events: none; z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="logo" class="logo-image">
+            久木村 住民管理ポータル
+        </a>
+        <div class="search-container">
+            <form id="site-search" onsubmit="handleSearch(event)">
+                <input type="text" id="search-input" placeholder="サイト内検索..." required>
+                <button type="submit">検索</button>
+            </form>
+        </div>
+    </header>
+
+    <main>
+        <h1 class="page-title">住民管理用参照資料：クギワラタケ（分析データ）</h1>
+
+        <div class="specimen-container">
+            <div class="specimen-image-wrapper">
+                <img src="images/data_kugiwara.png" alt="研究所解析データ" class="specimen-image">
+            </div>
+            
+            <div class="source-credit">
+                提供：<span class="redacted">国立菌類研究所</span>
+            </div>
+        </div>
+
+        <div class="system-note">
+            <strong>【管理者注記】</strong><br>
+            本資料は外部機関より共有された機密情報である。村外への持ち出し、および一般滞在者への開示は厳禁とする。
+        </div>
+    </main>
+
+    <div class="status-footer">&lt; 6/23 &gt; (Lv.1)</div>
+    <footer><p>このサイトの内容はフィクションです。実在の人物・団体とは一切関係ありません。</p></footer>
+
+    <script>
+        function handleSearch(event) {
+            event.preventDefault(); 
+            const query = document.getElementById('search-input').value.trim();
+            window.location.href = 'search.html?q=' + encodeURIComponent(query);
+        }
+    </script>
+</body>
+</html>

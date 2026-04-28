@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>御臥山大権現縁起（新編供犠村風土記より） - 久木村 住民管理ポータル</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- [裏] 統一テンプレート --- */
+        body { 
+            font-family: 'Shippori Mincho', serif; 
+            margin: 0; padding: 0; 
+            background-color: #050505; 
+            color: #b0a090; 
+            display: flex; flex-direction: column; min-height: 100vh; 
+        }
+
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px 40px; background-color: #000; 
+            border-bottom: 2px solid #400; z-index: 10; 
+        }
+        
+        .logo { 
+            font-size: 26px; font-weight: 700; color: #600; 
+            text-decoration: none; display: flex; align-items: center; 
+            letter-spacing: 2px; line-height: 1; 
+        }
+        
+        .logo-image { 
+            height: 42px !important; width: auto; margin-right: 12px; 
+            filter: grayscale(1) contrast(1.5); 
+        }
+        
+        .search-container { display: flex; }
+        .search-container input[type="text"] { padding: 8px 12px; border: 1px solid #222; background: #000; color: #888; border-radius: 4px 0 0 4px; outline: none; width: 200px; }
+        .search-container button { padding: 8px 16px; background-color: #400; color: #aaa; border: none; border-radius: 0 4px 4px 0; cursor: pointer; }
+
+        main { padding: 60px 20px; max-width: 800px; margin: 0 auto; flex-grow: 1; width: 100%; box-sizing: border-box; }
+        
+        .page-title { 
+            color: #800; border-bottom: 1px double #500; 
+            padding-bottom: 15px; margin-bottom: 40px; 
+            font-size: 22px; font-weight: 700; text-align: center;
+        }
+
+        .archive-container { 
+            background: #0a0a0a; padding: 50px; border-radius: 2px; 
+            border: 1px solid #332211; line-height: 2.2;
+            position: relative;
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAMAAADsEZWCAAAAGFBMVEUAAAAAAAAsLCwwMDA8PDxMTExtbW1/f3+YfV9fAAAAB3RSTlMA9O8A6u7N/D8XAAAAMklEQVQ4y2NgGAWjYBSMglEwCkbBKBi5gBEIpwAFApQAKBCgBEAFApQAqECAnIAsAADA8AAbS9ZfUAAAAABJRU5ErkJggg==');
+        }
+
+        h2 { color: #900; font-size: 1.4rem; text-align: center; margin-top: 50px; }
+        
+        .verse {
+            margin: 30px 0;
+            padding: 0 20px;
+            font-style: italic;
+            text-align: center;
+            color: #d0c0b0;
+        }
+
+        .source-tag {
+            text-align: right;
+            font-size: 0.9rem;
+            color: #765;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #321;
+            padding-bottom: 5px;
+        }
+
+        .commentary {
+            margin-top: 40px;
+            font-size: 0.95rem;
+            color: #887766;
+            border-top: 1px solid #332211;
+            padding-top: 20px;
+        }
+
+        .masked { 
+            background-color: #221111; 
+            color: transparent; 
+            display: inline-block; 
+            padding: 0 4px; 
+            border-radius: 2px;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+
+        .status-footer { 
+            text-align: right; padding: 10px 40px; 
+            font-family: 'Courier New', monospace; font-size: 14px; 
+            color: #554433; font-weight: bold;
+        }
+
+        footer { background-color: #000; color: #444; text-align: center; padding: 20px 0; font-size: 11px; }
+
+        .stain {
+            position: absolute; top: 10%; left: 5%; width: 100px; height: 100px;
+            background: radial-gradient(circle, rgba(60,20,0,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="logo" class="logo-image">
+            久木村 住民管理ポータル
+        </a>
+        <div class="search-container">
+            <form id="site-search" onsubmit="handleSearch(event)">
+                <input type="text" id="search-input" placeholder="サイト内検索..." required>
+                <button type="submit">検索</button>
+            </form>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-title">郷土資料：御臥山大権現 秘伝記</div>
+
+        <div class="archive-container">
+            <div class="stain"></div>
+            
+            <div class="source-tag">
+                出典：『新編供犠村風土記』
+            </div>
+
+            <div class="verse">
+                「天の火降り注ぎて 地は二たび火を吹き<br>
+                赤き砂 降り積みて 日は失せり<br>
+                野に草なく 蔵に米なく 人は子を食らいて<br>
+                死の臭い 村を覆い尽くせし時」
+            </div>
+
+            <p>古き記録によれば、その御方は<strong> 二つの山が火を吹いた </strong>後に、東の空から落ちてきた「星」であったという。一度目の火にて地を裂き、二度目の火にて空を焦がした折、日の本は未曾有の飢えに見舞われた。飢餓を超え、もはや生ける者なき絶望の淵に、その「肉塊」は御臥山の奥深くに根を下ろした。</p>
+
+            <h2>起源：縋りし者の契約</h2>
+            <div class="content-section">
+                <p>当時、村の長であった <span class="masked">守谷某</span> は、全滅を免れるため、山に鳴動するその「御声」に応えた。御方は告げられた。<strong>「余に器（うつわ）を与えよ。さすれば、この地の飢えを、余が代わりに食らい尽くさん」</strong>と。</p>
+                <p>以来、御方は御臥山そのものと成り、村の<strong>「空腹」を永久に肩代わりした。</strong> 代償として、村は定期的、かつ永続的に「新鮮な器」を御方の空腹を満たすために供え続けねばならぬ。これが久木村とオフシ様の始まりであり、代々負うべき「給仕」の責務である。</p>
+            </div>
+
+            <div class="commentary">
+                <p><strong>【資料注解】</strong><br>
+                「二つの噴火」とは、歴史上の <span class="masked">岩木山噴火（1783年）</span> および <span class="masked">浅間山大噴火（1783年）</span> を指すものと推測される。また「赤き砂」とは、東北一円を覆った降灰の記述と一致する。村の「飢餓」を神が食らうという伝承は、逆説的に言えば、神の空腹が村の滅亡を意味することを示唆している。</p>
+            </div>
+        </div>
+    </main>
+
+    <div class="status-footer">&lt; 14/23 &gt; (Lv.3)</div>
+    <footer><p>このサイトの内容はフィクションです。実在の人物・団体とは一切関係ありません。</p></footer>
+
+    <script>
+        function handleSearch(event) {
+            event.preventDefault(); 
+            const query = document.getElementById('search-input').value.trim();
+            window.location.href = 'search.html?q=' + encodeURIComponent(query);
+        }
+    </script>
+</body>
+</html>

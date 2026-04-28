@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お祭りについて - 久木村観光復興サイト</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- 共通スタイル --- */
+        body { font-family: 'Noto Sans JP', sans-serif; font-weight: 400; margin: 0; padding: 0; background-color: #f4f1ea; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; background-color: #ffffff; border-bottom: 3px solid #3c5a24; }
+        .logo { font-size: 26px; font-weight: 700; color: #3c5a24; text-decoration: none; display: flex; align-items: center; letter-spacing: 2px; line-height: 1; }
+        .logo-image { height: 42px !important; width: auto; margin-right: 12px; display: block; position: relative; top: -1px; }
+        .search-container { display: flex; }
+        .search-container input[type="text"] { font-family: 'Noto Sans JP', sans-serif; padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px 0 0 4px; outline: none; width: 200px; }
+        .search-container button { font-family: 'Noto Sans JP', sans-serif; font-weight: 500; padding: 8px 16px; background-color: #3c5a24; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer; }
+        
+        nav { background-color: #3c5a24; }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; }
+        nav li { border-right: 1px solid #5a803a; }
+        nav li:first-child { border-left: 1px solid #5a803a; }
+        nav a { display: block; padding: 15px 40px; color: #ffffff; text-decoration: none; font-weight: 500; font-size: 16px; letter-spacing: 1px; }
+        nav a:hover { background-color: #4a6a2e; }
+
+        /* --- メインコンテンツ --- */
+        main { padding: 40px 20px; max-width: 1000px; margin: 0 auto; flex-grow: 1; }
+        .page-title { color: #3c5a24; border-left: 8px solid #3c5a24; padding-left: 15px; margin-bottom: 40px; font-size: 28px; font-weight: 700; }
+        
+        section { margin-bottom: 60px; }
+        .feature-block { display: flex; gap: 40px; align-items: center; margin-bottom: 40px; }
+        .feature-block:nth-child(even) { flex-direction: row-reverse; }
+        .feature-image { width: 50%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .feature-text { width: 50%; }
+        .feature-text h2 { color: #8b7355; font-size: 24px; margin-bottom: 15px; border-bottom: 2px solid #e9dcc9; padding-bottom: 10px; }
+        .feature-text p { line-height: 1.8; font-size: 15px; text-align: justify; }
+
+        .special-dish { background: #ffffff; padding: 40px; border-radius: 12px; border: 1px solid #e9dcc9; text-align: center; margin-bottom: 60px; }
+        .special-dish h2 { color: #3c5a24; margin-bottom: 25px; }
+        .dish-image { max-width: 80%; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+        
+        .dish-desc { max-width: 800px; margin: 0 auto; line-height: 2; text-align: left; }
+        .dish-desc p { margin-bottom: 1.5em; }
+
+        /* 単語の泣き別れを防ぐクラス */
+        .nobrk { display: inline-block; }
+
+        .schedule-container { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .schedule-table { width: 100%; border-collapse: collapse; }
+        .schedule-table th, .schedule-table td { padding: 15px; border-bottom: 1px solid #eee; text-align: left; }
+        .schedule-table th { color: #3c5a24; width: 20%; font-size: 18px; }
+        .schedule-table td { font-size: 15px; }
+        .schedule-desc { font-size: 13px; color: #777; display: block; margin-top: 4px; }
+
+        .status-footer { text-align: right; padding: 10px 40px; background-color: #f4f1ea; font-family: 'Courier New', Courier, monospace; font-size: 14px; color: #999; letter-spacing: 1px; }
+        footer { background-color: #2c2c2c; color: #b0b0b0; text-align: center; padding: 20px 0; font-size: 13px; margin-top: 40px; }
+        footer p { margin: 0 !important; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="logo" class="logo-image">
+            久木村観光復興サイト
+        </a>
+        <div class="search-container">
+            <form id="site-search" onsubmit="handleSearch(event)">
+                <input type="text" id="search-input" placeholder="サイト内検索..." required>
+                <button type="submit">検索</button>
+            </form>
+        </div>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="about.html">村について</a></li>
+            <li><a href="specialty.html">特産品について</a></li>
+            <li><a href="festival.html">お祭りについて</a></li>
+            <li><a href="mayor.html">村長から</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1 class="page-title">帰依山祭（きえさんさい）</h1>
+
+        <div class="feature-block">
+            <img src="images/festival1.png" alt="山への祈祷" class="feature-image">
+            <div class="feature-text">
+                <h2>悠久の祈り、山の神事</h2>
+                <p>帰依山祭は、久木村がその始まりの時から守り続けてきた、最も尊い伝統行事です。祭りの朝、清浄な空気の中で執り行われる祈祷は、村を取り囲む豊かな自然への感謝と、久木村をお守りしていただくための誓いでもあります。</p>
+                <p>この儀式により、村と外の世界、あるいは目に見えぬものとの境界が静かに整えられ、村に深い安寧がもたらされます。</p>
+            </div>
+        </div>
+
+        <div class="feature-block">
+            <img src="images/festival2.png" alt="宴の様子" class="feature-image">
+            <div class="feature-text">
+                <h2>結びつきを深める直会（なおらい）</h2>
+                <p>神事の後は、村人全員が集まり、盛大な宴が開かれます。老いも若きも同じ卓を囲み、酒を酌み交わすこの時間は、村の共同体としての絆を再確認する大切なひとときです。</p>
+                <p>外からの賓客も温かく迎え入れられ、賑やかな笑い声が村中に響き渡ります。この一体感こそが、久木村の強さの源なのです。</p>
+            </div>
+        </div>
+
+        <section class="special-dish">
+            <h2>祭りの中心を彩る特別な一杯</h2>
+            <img src="images/festival3.png" alt="クギワラ粥" class="dish-image">
+            <div class="dish-desc">
+                <p>帰依山祭において村人が何よりも心待ちにしているのが、この日のために用意される特別な郷土料理<strong><span class="nobrk">クギワラ粥</span></strong>です。特産品である貴重な<span class="nobrk">クギワラタケ</span>をふんだんに使い、古くから伝わる秘伝の調理法でじっくりと炊き上げられたこの粥は、一口含めば土地の息吹が体中を駆け巡るような、力強くも滋味深い味わいを持っています。</p>
+                <p>お祭りの期間中、この粥は村を訪れたすべての観光客の皆様へも無料で振る舞われます。古来より、この特別な食を口にし、その成分を体内に取り入れることこそが土地との繋がりを深める最良の方法とされており、皆様にもその慶びを分かち合っていただきたいと考えております。ぜひ、温かいうちにお召し上がりください。</p>
+            </div>
+        </section>
+
+        <section class="schedule-container">
+            <h2>当日スケジュール</h2>
+            <table class="schedule-table">
+                <tr>
+                    <th>10:00</th>
+                    <td>奉納神事（お祈り）<span class="schedule-desc">村の平穏を祈願する、祭りの始まりの儀式です。</span></td>
+                </tr>
+                <tr>
+                    <th>11:00</th>
+                    <td>祝詞奏上<span class="schedule-desc">山の神々へ、感謝の言葉を捧げます。</span></td>
+                </tr>
+                <tr>
+                    <th>12:00</th>
+                    <td>直会（なおらい）<span class="schedule-desc"><strong><span class="nobrk">クギワラ粥</span></strong>の無料配布を開始いたします。</span></td>
+                </tr>
+                <tr>
+                    <th>13:30</th>
+                    <td>郷土芸能「久木神楽」<span class="schedule-desc">古くから伝わる舞を披露します。</span></td>
+                </tr>
+                <tr>
+                    <th>15:30</th>
+                    <td>心身の清め（禊）<span class="schedule-desc">日没に備え、静寂の中で山の音を聞き、心を空にする時間です。</span></td>
+                </tr>
+                <tr>
+                    <th>17:00</th>
+                    <td>宵の静寂（よいのしじま）<span class="schedule-desc">これ以降、観光客の皆様は各宿泊施設にてお静かにお過ごしください。</span></td>
+                </tr>
+            </table>
+        </section>
+    </main>
+
+    <div class="status-footer">&lt; 4/23 &gt; (Lv.0)</div>
+    <footer><p>このサイトの内容はフィクションです。実在の人物・団体とは一切関係ありません。</p></footer>
+
+    <script>
+        function handleSearch(event) {
+            event.preventDefault(); 
+            const query = document.getElementById('search-input').value.trim();
+            window.location.href = 'search.html?q=' + encodeURIComponent(query);
+        }
+    </script>
+</body>
+</html>

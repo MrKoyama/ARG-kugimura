@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>特産品について - 久木村観光復興サイト</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- 共通スタイル --- */
+        body { font-family: 'Noto Sans JP', sans-serif; font-weight: 400; margin: 0; padding: 0; background-color: #f4f1ea; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; background-color: #ffffff; border-bottom: 3px solid #3c5a24; }
+        .logo { font-size: 26px; font-weight: 700; color: #3c5a24; text-decoration: none; display: flex; align-items: center; letter-spacing: 2px; line-height: 1; }
+        .logo-image { height: 42px !important; width: auto; margin-right: 12px; display: block; position: relative; top: -1px; }
+        .search-container { display: flex; }
+        .search-container input[type="text"] { font-family: 'Noto Sans JP', sans-serif; padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px 0 0 4px; outline: none; width: 200px; }
+        .search-container button { font-family: 'Noto Sans JP', sans-serif; font-weight: 500; padding: 8px 16px; background-color: #3c5a24; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer; }
+        nav { background-color: #3c5a24; }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; }
+        
+        /* 修正：左側にも縦線を追加 */
+        nav li { border-left: 1px solid #5a803a; }
+        nav li:last-child { border-right: 1px solid #5a803a; }
+
+        nav a { display: block; padding: 15px 40px; color: #ffffff; text-decoration: none; font-weight: 500; font-size: 16px; letter-spacing: 1px; }
+
+        /* --- 黒塗り（規制）スタイル --- */
+        .censored {
+            background-color: #222;
+            color: #222;
+            padding: 0 2px;
+            margin: 0 1px;
+            border-radius: 2px;
+            user-select: none; /* ドラッグ選択不可 */
+        }
+
+        /* --- メインコンテンツ --- */
+        main { padding: 40px 20px; max-width: 900px; margin: 0 auto; flex-grow: 1; }
+        .page-title { color: #3c5a24; border-left: 8px solid #3c5a24; padding-left: 15px; margin-bottom: 40px; font-size: 28px; font-weight: 700; }
+        
+        .product-card { background-color: #ffffff; display: flex; gap: 30px; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 40px; align-items: flex-start; }
+        .product-image { width: 40%; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .product-info { width: 60%; }
+        .product-info h2 { color: #8b7355; font-size: 24px; margin-top: 0; border-bottom: 2px solid #f4f1ea; padding-bottom: 10px; }
+        .product-info p { line-height: 1.8; font-size: 15px; }
+        
+        .usage-note { background-color: #fdf8f0; border: 1px solid #e9dcc9; padding: 15px; margin-top: 20px; font-size: 14px; border-left: 4px solid #8b7355; }
+        .usage-note strong { color: #8b7355; }
+
+        /* ステータスフッター */
+        .status-footer { text-align: right; padding: 10px 40px; background-color: #f4f1ea; font-family: 'Courier New', Courier, monospace; font-size: 14px; color: #999; letter-spacing: 1px; }
+        footer { background-color: #2c2c2c; color: #b0b0b0; text-align: center; padding: 20px 0; font-size: 13px; margin-top: 40px; }
+        footer p { margin: 0 !important; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="logo" class="logo-image">
+            久木村観光復興サイト
+        </a>
+        <div class="search-container">
+            <form id="site-search" onsubmit="handleSearch(event)">
+                <input type="text" id="search-input" placeholder="サイト内検索..." required>
+                <button type="submit">検索</button>
+            </form>
+        </div>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="about.html">村について</a></li>
+            <li><a href="specialty.html">特産品について</a></li>
+            <li><a href="festival.html">お祭りについて</a></li>
+            <li><a href="mayor.html">村長から</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1 class="page-title">久木村の特産品</h1>
+
+        <div class="product-card">
+            <img src="images/kugiwaratake.png" alt="クギワラタケ" class="product-image">
+            <div class="product-info">
+                <h2><span class="censored">御臥山</span>の至宝：クギワラタケ</h2>
+                <p>久木村の聖域、<span class="censored">御臥山</span>の奥深くにのみ自生する希少なキノコです。仄暗い森の中で淡い光を放つその姿は非常に幻想的で、古来より村人たちの間では「山の魂」の一部として大切に扱われてきました。</p>
+                <p>非常に繊細な性質を持ち、村の外へ持ち出すとすぐにその輝きと風味が失われてしまうため、久木村を訪れた方だけが知ることができる、まさに秘蔵の特産品と言えます。</p>
+                
+                <div class="usage-note">
+                    <strong>【伝承される味わい】</strong><br>
+                    独特の香りと深いコクを持つクギワラタケは、久木村に古くから伝わる郷土料理の主役として欠かせない存在です。その料理を口にすることで、村の人々は厳しい冬を乗り越える活力を得てきたと言われています。
+                </div>
+            </div>
+        </div>
+
+        <section style="background: white; padding: 20px; border-radius: 8px; font-size: 14px; color: #666;">
+            <p>※クギワラタケは現在、<span class="censored">御臥山</span>内の保護区域内でのみ採取が許可されています。無断での採取は固く禁じられておりますのでご注意ください。</p>
+        </section>
+    </main>
+
+    <div class="status-footer">&lt; 3/23 &gt; (Lv.0)</div>
+    <footer><p>このサイトの内容はフィクションです。実在の人物・団体とは一切関係ありません。</p></footer>
+
+    <script>
+        function handleSearch(event) {
+            event.preventDefault(); 
+            const query = document.getElementById('search-input').value.trim();
+            window.location.href = 'search.html?q=' + encodeURIComponent(query);
+        }
+    </script>
+</body>
+</html>

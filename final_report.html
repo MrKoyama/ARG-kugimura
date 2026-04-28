@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FINAL_REPORT: OFUSHI - National Institute of Mycology</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+JP:wght@300;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* --- [裏] 研究所データベース：最高機密（Lv.5） --- */
+        html, body { height: 100%; margin: 0; padding: 0; }
+
+        body { 
+            font-family: 'Noto Sans JP', sans-serif; 
+            background-color: #000810; 
+            color: #88ccff; 
+            display: flex; flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* グリッド背景 */
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(0deg, rgba(0, 136, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 136, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px; pointer-events: none;
+        }
+
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 10px 40px; background-color: rgba(0, 20, 40, 0.95); 
+            border-bottom: 2px solid #0055aa; z-index: 10;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .inst-logo { font-size: 18px; color: #00aaff; letter-spacing: 2px; }
+
+        .search-container { display: flex; }
+        .search-container input[type="text"] { 
+            padding: 8px 12px; border: 1px solid #0055aa; background: #000; color: #00ff88; 
+            border-radius: 4px 0 0 4px; outline: none; width: 250px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+        .search-container button { 
+            padding: 8px 16px; background-color: #0055aa; color: white; border: none; 
+            border-radius: 0 4px 4px 0; cursor: pointer; font-family: 'Orbitron', sans-serif;
+        }
+
+        main { padding: 40px; max-width: 1200px; margin: 0 auto; flex: 1; z-index: 5; }
+
+        .report-header {
+            display: flex; align-items: flex-end; margin-bottom: 30px;
+            border-left: 5px solid #00aaff; padding-left: 20px;
+        }
+
+        /* 修正：PROJECT_OFUSHIを削除し、日本語タイトルのみに */
+        .name-jp { font-size: 2rem; color: #fff; font-weight: bold; }
+
+        .analysis-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
+        }
+
+        .analysis-card {
+            background: rgba(0, 30, 60, 0.8); border: 1px solid #0055aa; padding: 20px;
+        }
+
+        .image-frame {
+            background: #00152a; border: 1px solid #0055aa; padding: 10px;
+            position: relative; margin-bottom: 15px;
+            aspect-ratio: 16 / 9; overflow: hidden;
+            /* 画像保存を物理的にしにくくするための設定 */
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .image-label {
+            position: absolute; top: 15px; left: 15px;
+            background: rgba(0, 8, 16, 0.8); color: #00aaff;
+            padding: 5px 10px; font-size: 12px; border: 1px solid #00aaff;
+            z-index: 2; font-weight: bold; font-family: 'Share Tech Mono', monospace;
+        }
+
+        .data-image {
+            width: calc(100% - 20px); height: calc(100% - 20px);
+            object-fit: cover; position: absolute; top: 10px; left: 10px;
+            filter: brightness(0.7) contrast(1.1);
+            /* ドラッグ禁止 */
+            pointer-events: none;
+        }
+
+        .scan-line {
+            position: absolute; top: 10px; left: 10px; width: calc(100% - 20px); height: 2px;
+            background: rgba(0, 255, 255, 0.3); box-shadow: 0 0 10px #0ff;
+            animation: scan 4s linear infinite; z-index: 1; 
+        }
+
+        @keyframes scan { 0% { top: 10px; } 100% { top: calc(100% - 10px); } }
+
+        .label { color: #00aaff; font-weight: bold; font-size: 0.8rem; display: block; margin-top: 15px; border-bottom: 1px solid #004488; padding-bottom: 5px; margin-bottom: 10px; }
+
+        .data-info { font-size: 0.95rem; line-height: 1.8; text-align: justify; }
+
+        .status-footer { text-align: right; padding: 10px 40px; font-family: 'Orbitron', sans-serif; font-size: 14px; color: #0055aa; font-weight: bold; }
+
+        footer { 
+            background-color: #000; color: #fff; text-align: center; 
+            padding: 20px 0; font-size: 12px; z-index: 101; 
+            border-top: 1px solid #002244;
+        }
+
+        .conclusion-panel {
+            grid-column: span 2; background: rgba(0, 30, 60, 0.8); border: 1px solid #0055aa; padding: 25px; margin-top: 20px;
+        }
+        .unsettling { color: #fff; font-style: italic; opacity: 0.9; }
+    </style>
+</head>
+<body oncontextmenu="return false;"> <header>
+        <div class="inst-logo">NATIONAL MYCOLOGY DB</div>
+        <div class="search-container">
+            <form id="site-search" onsubmit="handleSearch(event)">
+                <input type="text" id="search-input" placeholder="ENTER SEARCH_QUERY..." required>
+                <button type="submit">QUERY</button>
+            </form>
+        </div>
+    </header>
+
+    <main>
+        <div class="report-header">
+            <span class="name-jp">最終報告書：御臥山深部個体観測記録</span>
+        </div>
+
+        <div class="analysis-grid">
+            <div class="analysis-card">
+                <div class="image-frame">
+                    <div class="image-label">STRUCTURAL_SCAN</div>
+                    <div class="scan-line"></div>
+                    <img src="images/ofushi_ct_scan.png" alt="オフシ様のスキャン画像" class="data-image">
+                </div>
+                <div class="data-info">
+                    <span class="label">STRUCTURAL ANALYSIS</span>
+                    御臥山地下1,400m地点で観測された中枢核の断層写真。骨格状の組織は石灰化した古い菌糸体であり、中心部には巨大な中枢神経系が確認されている。
+                </div>
+            </div>
+
+            <div class="analysis-card">
+                <div class="image-frame">
+                    <div class="image-label">THERMAL_MONITOR</div>
+                    <div class="scan-line"></div>
+                    <img src="images/ofushi_thermo.png" alt="オフシ様のサーモグラフィー画像" class="data-image">
+                </div>
+                <div class="data-info">
+                    <span class="label">THERMAL DISTRIBUTION</span>
+                    周辺岩盤の温度分布。対象の周囲のみ、常に人間の平熱に酷似した摂氏36.5度を維持しており、これは環境適応ではなく個体の大規模な代謝による排熱と思われる。
+                </div>
+            </div>
+
+            <div class="analysis-card">
+                <div class="image-frame">
+                    <div class="image-label">SPORE_SEM_IMAGE</div>
+                    <div class="scan-line"></div>
+                    <img src="images/spore_microscope.png" alt="胞子を電子顕微鏡で見た画像" class="data-image">
+                </div>
+                <div class="data-info">
+                    <span class="label">MYCOLOGICAL DETAIL</span>
+                    クギワラタケから飛散する胞子の10,000倍拡大図。胞子表面には微細な鉤爪状の突起があり、吸入した宿主の脳血流門を突破し、前頭葉への定着を容易にする。
+                </div>
+            </div>
+
+            <div class="analysis-card">
+                <div class="image-frame">
+                    <div class="image-label">ACOUSTIC_WAVEFORM</div>
+                    <div class="scan-line"></div>
+                    <img src="images/sound_wave.png" alt="オフシ様が出す音波データ" class="data-image">
+                </div>
+                <div class="data-info">
+                    <span class="label">GEOLOGICAL RESONANCE</span>
+                    山体深部より発せられる超低周波の解析結果。周期的な山鳴りの発生タイミングと、中枢核の蠕動（ぜんどう）による飢餓反応の波形が完全に一致していることが判明した。
+                </div>
+            </div>
+
+            <div class="conclusion-panel">
+                <span class="label">FINAL CONCLUSION / SUMMARY</span>
+                <p class="data-info">
+                    「オフシ様」という存在は、村人が信じているような神格ではなく、理屈の通じない未確認の超大規模生命体と定義せざるを得ない。我々はこの個体を「山」として観察してきたが、事実は逆であり、山そのものがこの個体の「胃袋」として機能しているのではないだろうか。<br><br>
+                    <span class="unsettling">
+                        最近、山鳴りの頻度が急激に増加している。もしこれが個体の「空腹」を意味しているのだとしたら、これまで供給してきたリソース（観光客等）では、もはや足りなくなってきているのではないか……？ 我々は、一体何を目覚めさせてしまったのだろうか。
+                    </span>
+                </p>
+                <p style="text-align: right; font-size: 0.8rem; margin-top: 20px;">―― 主任研究員 佐伯 浩二</p>
+            </div>
+        </div>
+    </main>
+
+    <div class="status-footer">&lt; 23/23 &gt; (Lv.5)</div>
+    
+    <footer>このサイトの内容はフィクションです。実在の人物・団体とは一切関係ありません。</footer>
+
+    <script>
+        function handleSearch(event) {
+            event.preventDefault(); 
+            const query = document.getElementById('search-input').value.trim();
+            window.location.href = 'search.html?q=' + encodeURIComponent(query);
+        }
+    </script>
+</body>
+</html>
