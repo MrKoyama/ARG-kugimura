@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARG 到達ヒント一覧</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           リセットと基本設定
+           ========================================= */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            color: #333333;
+            background-color: #ffffff;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            border-bottom: 2px solid #333333;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            font-size: 0.95rem;
+            color: #666666;
+            margin-bottom: 40px;
+        }
+
+        /* =========================================
+           大カテゴリ（Lv.1〜5）のアコーディオン
+           ========================================= */
+        .level-group {
+            margin-bottom: 20px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+
+        .level-summary {
+            padding: 15px 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            list-style: none; /* デフォルトの矢印を消す */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .level-summary:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Safari向け デフォルト矢印消去 */
+        .level-summary::-webkit-details-marker {
+            display: none;
+        }
+
+        /* ＋ / − アイコン */
+        .level-summary::after {
+            content: "＋";
+            font-size: 1.2rem;
+            color: #666666;
+        }
+
+        .level-group[open] > .level-summary::after {
+            content: "−";
+        }
+
+        .level-group[open] > .level-summary {
+            border-bottom: 1px solid #cccccc;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .level-content {
+            padding: 20px;
+        }
+
+        /* =========================================
+           個別ページ（Page 01等）のアコーディオン
+           ========================================= */
+        .hint-item {
+            margin-bottom: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            background-color: #ffffff;
+        }
+
+        .hint-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .hint-summary {
+            padding: 12px 15px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #444444;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+
+        .hint-summary:hover {
+            background-color: #f5f5f5;
+        }
+
+        .hint-summary::-webkit-details-marker {
+            display: none;
+        }
+
+        /* ▼ / ▲ アイコン（レベルとは違う記号で区別） */
+        .hint-summary::after {
+            content: "▼";
+            font-size: 0.8rem;
+            color: #999999;
+        }
+
+        .hint-item[open] > .hint-summary::after {
+            content: "▲";
+        }
+
+        .hint-item[open] > .hint-summary {
+            border-bottom: 1px dashed #e0e0e0;
+        }
+
+        /* 展開されるヒントのテキスト部分 */
+        .hint-text {
+            padding: 15px;
+            font-size: 0.95rem;
+            color: #333333;
+            line-height: 1.8;
+            background-color: #fafafa;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <h1>ARG 到達ヒント一覧</h1>
+        <p class="description">
+            各ページの到達難易度（レベル）別にヒントを記載しています。<br>
+            レベルを選択後、見たい「ページ番号」をクリックしてヒントを開いてください。<br>
+        </p>
+        
+        <!-- ================== Lv.0 ================== -->
+        <details class="level-group">
+            <summary class="level-summary">Lv.0 (No.1~5)</summary>
+            <div class="level-content">
+                
+                <!-- テンプレートブロック：ここをコピペしてページを追加・削除できます -->
+                <details class="hint-item">
+                    <summary class="hint-summary">No.1</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        トップページ
+                    </div>
+                </details>
+
+                <details class="hint-item">
+                    <summary class="hint-summary">No.2</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        トップページのヘッダーより遷移
+                    </div>
+                </details>
+                
+                <details class="hint-item">
+                    <summary class="hint-summary">No.3</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        トップページのヘッダーより遷移
+                    </div>
+                </details>
+
+                <details class="hint-item">
+                    <summary class="hint-summary">No.4</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        トップページのヘッダーより遷移
+                    </div>
+                </details>
+                
+                <details class="hint-item">
+                    <summary class="hint-summary">No.5</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        トップページのヘッダーより遷移
+                    </div>
+                </details>
+
+            </div>
+        </details>
+
+        <!-- ================== Lv.1 ================== -->
+        <details class="level-group">
+            <summary class="level-summary">Lv.1 (No.6~10)</summary>
+            <div class="level-content">
+                
+                <details class="hint-item">
+                    <summary class="hint-summary">No.6</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        村の特産品について検索
+                    </div>
+                </details>
+
+                <details class="hint-item">
+                    <summary class="hint-summary">No.7</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        村の郷土料理について検索
+                    </div>
+                </details>
+                
+                <details class="hint-item">
+                    <summary class="hint-summary">No.8</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        祭のとある工程について検索
+                    </div>
+                </details>
+
+                <details class="hint-item">
+                    <summary class="hint-summary">No.9</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        No.5にて強調されている単語を検索
+                    </div>
+                </details>
+                
+                <details class="hint-item">
+                    <summary class="hint-summary">No.10</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        村長の名前を検索
+                    </div>
+                </details>
+
+            </div>
+        </details>
+
+        <!-- ================== Lv.2 ================== -->
+        <details class="level-group">
+            <summary class="level-summary">Lv.2 (No.11~13)</summary>
+            <div class="level-content">
+
+                <details class="hint-item">
+                    <summary class="hint-summary">No.11</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        濃縮液の奉納先について検索
+                    </div>
+                </details>
+
+                <details class="hint-item">
+                    <summary class="hint-summary">No.12</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        運搬車両の行き先について検索
+                    </div>
+                </details>
+
+                <details class="hint-item">
+                    <summary class="hint-summary">No.13</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        山で起きた現象について検索
+                    </div>
+                </details>
+            </div>
+        </details>
+
+        <!-- ================== Lv.3 ================== -->
+        <details class="level-group">
+            <summary class="level-summary">Lv.3 (No.14~15,17~18)</summary>
+            <div class="level-content">
+
+                <details class="hint-item">
+                    <summary class="hint-summary">No.14</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        山の神の名称について検索
+                    </div>
+                </details>
+
+                <details class="hint-item">
+                    <summary class="hint-summary">No.15</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        No.14の出典について検索
+                    </div>
+                </details>
+
+                <details class="hint-item">
+                    <summary class="hint-summary">No.17</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        No.12に遷移するために使用した検索ワードから連想されるワードを検索
+                    </div>
+                </details>
+
+                <details class="hint-item">
+                    <summary class="hint-summary">No.18</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        No.17を封鎖した組織について検索
+                    </div>
+                </details>
+            </div>
+        </details>
+
+        <!-- ================== Lv.4 ================== -->
+        <details class="level-group">
+            <summary class="level-summary">Lv.4 (No.16,19~22)</summary>
+            <div class="level-content">
+
+                <details class="hint-item">
+                    <summary class="hint-summary">No.16</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        No.15の画像内にある村の旧名について検索
+                    </div>
+                </details>
+
+                <details class="hint-item">
+                    <summary class="hint-summary">No.19</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        司令を発令した組織について検索
+                    </div>
+                </details>
+
+                <details class="hint-item">
+                    <summary class="hint-summary">No.20</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        No.14の文章から2回の噴火、飢饉が起きた年代(2つの山が噴火した年)を外部サイト(Google等)にて検索し、入力。
+                    </div>
+                </details>
+
+                <details class="hint-item">
+                    <summary class="hint-summary">No.21</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        No.20に記載されている人物について検索
+                    </div>
+                </details>
+
+                <details class="hint-item">
+                    <summary class="hint-summary">No.22</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        No.20に記載されている研究機関について検索
+                    </div>
+                </details>
+
+            </div>
+        </details>
+
+        <!-- ================== Lv.5 ================== -->
+        <details class="level-group">
+            <summary class="level-summary">Lv.5 (Lv.23)</summary>
+            <div class="level-content">
+
+                <details class="hint-item">
+                    <summary class="hint-summary">No.23</summary>
+                    <div class="hint-text">
+                        <!-- ここにヒントを記述 -->
+                        No.6の画像内からID,ItemNoを抜き出す。年代はNo.21に到達するために使用したものと同じ。<br>（アイテム番号〇〇〇〇+年代△△△△、入力は〇〇〇〇△△△△）
+                    </div>
+                </details>
+
+            </div>
+        </details>
+
+    </div>
+
+</body>
+</html>
