@@ -63,7 +63,10 @@
         }
         .directive-block::before { content: "御臥山管理局 最終指令"; color: #f00; font-size: 0.75rem; font-weight: bold; position: absolute; top: -10px; left: 10px; background: #111; padding: 0 5px; }
 
-        .masked { background-color: #333; color: transparent; display: inline-block; padding: 0 4px; border-radius: 2px; }
+        .masked { background-color: #333; color: transparent; user-select: none; 
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;display: inline-block; padding: 0 4px; border-radius: 2px; }
 
         .status-footer { text-align: right; padding: 10px 40px; font-family: 'Courier New', monospace; font-size: 14px; color: #999; font-weight: bold; }
 

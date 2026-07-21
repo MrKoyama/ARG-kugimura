@@ -1,414 +1,452 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARG 到達ヒント一覧</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
-    
-    <style>
-        /* =========================================
-           リセットと基本設定
-           ========================================= */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARG「久木村観光復興サイト」 ヒントページ</title>
+<style>
+:root {
+    --bg-color: #fdfbf7; 
+    --card-bg: #ffffff;
+    --text-color: #333333;
+    --text-muted: #666666;
+    --border-color: #cccccc;
+    --btn-bg: #f5f5f5;
+    --btn-hover: #e9e9e9;
+}
 
-        body {
-            font-family: 'Noto Sans JP', sans-serif;
-            color: #333333;
-            background-color: #ffffff;
-            line-height: 1.6;
-            padding: 40px 20px;
-        }
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Yu Gothic", "Meiryo", sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+header {
+    background-color: var(--card-bg);
+    padding: 30px 20px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
 
-        h1 {
-            font-size: 1.8rem;
-            border-bottom: 2px solid #333333;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-        }
+header h1 {
+    margin: 0;
+    font-size: 24px;
+    color: var(--text-color);
+}
 
-        .description {
-            font-size: 0.95rem;
-            color: #666666;
-            margin-bottom: 40px;
-        }
+main {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
 
-        /* =========================================
-           大カテゴリ（Lv.1〜5）のアコーディオン
-           ========================================= */
-        .level-group {
-            margin-bottom: 20px;
-            border: 1px solid #cccccc;
-            border-radius: 4px;
-            background-color: #f9f9f9;
-        }
+.rule-box {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 40px;
+}
 
-        .level-summary {
-            padding: 15px 20px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            list-style: none; /* デフォルトの矢印を消す */
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #ffffff;
-            border-radius: 4px;
-            transition: background-color 0.2s;
-        }
+.rule-box h2 {
+    margin-top: 0;
+    font-size: 16px;
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 10px;
+}
 
-        .level-summary:hover {
-            background-color: #f0f0f0;
-        }
+.rule-box ul {
+    margin: 0;
+    padding-left: 20px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
 
-        /* Safari向け デフォルト矢印消去 */
-        .level-summary::-webkit-details-marker {
-            display: none;
-        }
+.rule-box li {
+    margin-bottom: 8px;
+}
 
-        /* ＋ / − アイコン */
-        .level-summary::after {
-            content: "＋";
-            font-size: 1.2rem;
-            color: #666666;
-        }
+.hint-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
-        .level-group[open] > .level-summary::after {
-            content: "−";
-        }
+/* ページごとのアコーディオン（親） */
+.page-accordion {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
 
-        .level-group[open] > .level-summary {
-            border-bottom: 1px solid #cccccc;
-            border-radius: 4px 4px 0 0;
-        }
+.page-trigger {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 15px 20px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s;
+}
 
-        .level-content {
-            padding: 20px;
-        }
+.page-trigger:hover {
+    background-color: var(--btn-bg);
+}
 
-        /* =========================================
-           個別ページ（Page 01等）のアコーディオン
-           ========================================= */
-        .hint-item {
-            margin-bottom: 10px;
-            border: 1px solid #e0e0e0;
-            border-radius: 4px;
-            background-color: #ffffff;
-        }
+.page-trigger::after {
+    content: '▼';
+    font-size: 12px;
+    color: var(--text-muted);
+    transition: transform 0.3s;
+}
 
-        .hint-item:last-child {
-            margin-bottom: 0;
-        }
+.page-accordion.is-active > .page-trigger::after {
+    transform: rotate(180deg);
+}
 
-        .hint-summary {
-            padding: 12px 15px;
-            font-size: 1rem;
-            font-weight: bold;
-            color: #444444;
-            cursor: pointer;
-            list-style: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background-color 0.2s;
-        }
+.page-content {
+    display: none;
+    padding: 20px;
+    border-top: 1px solid var(--border-color);
+    background-color: #fafafa;
+}
 
-        .hint-summary:hover {
-            background-color: #f5f5f5;
-        }
+.page-accordion.is-active > .page-content {
+    display: block;
+}
 
-        .hint-summary::-webkit-details-marker {
-            display: none;
-        }
+/* 段階的ヒントのアコーディオン（子） */
+.sub-hint-box {
+    margin-bottom: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 2px;
+    background-color: var(--card-bg);
+}
 
-        /* ▼ / ▲ アイコン（レベルとは違う記号で区別） */
-        .hint-summary::after {
-            content: "▼";
-            font-size: 0.8rem;
-            color: #999999;
-        }
+.sub-hint-box:last-child {
+    margin-bottom: 0;
+}
 
-        .hint-item[open] > .hint-summary::after {
-            content: "▲";
-        }
+.sub-trigger {
+    width: 100%;
+    background-color: var(--btn-bg);
+    border: none;
+    padding: 10px 15px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s;
+}
 
-        .hint-item[open] > .hint-summary {
-            border-bottom: 1px dashed #e0e0e0;
-        }
+.sub-trigger:hover {
+    background-color: var(--btn-hover);
+}
 
-        /* 展開されるヒントのテキスト部分 */
-        .hint-text {
-            padding: 15px;
-            font-size: 0.95rem;
-            color: #333333;
-            line-height: 1.8;
-            background-color: #fafafa;
-        }
+.sub-trigger::after {
+    content: '＋';
+    font-size: 14px;
+    color: var(--text-muted);
+}
 
-    </style>
+.sub-hint-box.is-active > .sub-trigger::after {
+    content: '－';
+}
+
+.sub-content {
+    display: none;
+    padding: 15px;
+    font-size: 14px;
+    color: var(--text-color);
+    border-top: 1px solid var(--border-color);
+    line-height: 1.8;
+}
+
+.sub-hint-box.is-active > .sub-content {
+    display: block;
+}
+
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border-color);
+    margin-top: 60px;
+}
+</style>
 </head>
 <body>
 
-    <div class="container">
+<header>
+    <h1>ARG「奇跡の水」 ヒントページ</h1>
+</header>
+
+<main>
+    <div class="rule-box">
+        <h2>最初に必ずお読みください</h2>
+        <ul>
+            <li>本ゲームは、画面内の「リンクをクリックする」か「テキストを検索窓に入力する」だけで進行できます。</li>
+            <li>URLの直接改変や、ソースコードの閲覧は一切必要ありません。</li>
+            <li>ネタバレを避けるため、現在詰まっているページの番号のみを開いてご確認ください。</li>
+        </ul>
+    </div>
+
+    <div class="hint-container">
         
-        <h1>ARG 到達ヒント一覧</h1>
-        <p class="description">
-            各ページの到達難易度（レベル）別にヒントを記載しています。<br>
-            レベルを選択後、見たい「ページ番号」をクリックしてヒントを開いてください。<br>
-        </p>
-        
-        <!-- ================== Lv.0 ================== -->
-        <details class="level-group">
-            <summary class="level-summary">Lv.0 (No.1~5)</summary>
-            <div class="level-content">
-                
-                <!-- テンプレートブロック：ここをコピペしてページを追加・削除できます -->
-                <details class="hint-item">
-                    <summary class="hint-summary">No.1</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        トップページ
-                    </div>
-                </details>
-
-                <details class="hint-item">
-                    <summary class="hint-summary">No.2</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        トップページのヘッダーより遷移
-                    </div>
-                </details>
-                
-                <details class="hint-item">
-                    <summary class="hint-summary">No.3</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        トップページのヘッダーより遷移
-                    </div>
-                </details>
-
-                <details class="hint-item">
-                    <summary class="hint-summary">No.4</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        トップページのヘッダーより遷移
-                    </div>
-                </details>
-                
-                <details class="hint-item">
-                    <summary class="hint-summary">No.5</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        トップページのヘッダーより遷移
-                    </div>
-                </details>
-
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 1 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">noteを読みましょう。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">プロローグや、遊び方の箇所にクリックできるところがありそうですね…？</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content">このリンクに飛んでください。"https://arg-kugimura.pages.dev/index.html"</div></div>
             </div>
-        </details>
+        </div>
 
-        <!-- ================== Lv.1 ================== -->
-        <details class="level-group">
-            <summary class="level-summary">Lv.1 (No.6~10)</summary>
-            <div class="level-content">
-                
-                <details class="hint-item">
-                    <summary class="hint-summary">No.6</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        村の特産品について検索
-                    </div>
-                </details>
-
-                <details class="hint-item">
-                    <summary class="hint-summary">No.7</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        村の郷土料理について検索
-                    </div>
-                </details>
-                
-                <details class="hint-item">
-                    <summary class="hint-summary">No.8</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        祭のとある工程について検索
-                    </div>
-                </details>
-
-                <details class="hint-item">
-                    <summary class="hint-summary">No.9</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        No.5にて強調されている単語を検索
-                    </div>
-                </details>
-                
-                <details class="hint-item">
-                    <summary class="hint-summary">No.10</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        村長の名前を検索
-                    </div>
-                </details>
-
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 2 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">どこかクリックできる箇所はありませんか？</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">ヘッダーを見てみましょう。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content">ヘッダーにある、「村について」をクリックしてください。</div></div>
             </div>
-        </details>
+        </div>
 
-        <!-- ================== Lv.2 ================== -->
-        <details class="level-group">
-            <summary class="level-summary">Lv.2 (No.11~13)</summary>
-            <div class="level-content">
-
-                <details class="hint-item">
-                    <summary class="hint-summary">No.11</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        濃縮液の奉納先について検索
-                    </div>
-                </details>
-
-                <details class="hint-item">
-                    <summary class="hint-summary">No.12</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        運搬車両の行き先について検索
-                    </div>
-                </details>
-
-                <details class="hint-item">
-                    <summary class="hint-summary">No.13</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        山で起きた現象について検索
-                    </div>
-                </details>
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 3 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">どこかクリックできる箇所はありませんか？</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">ヘッダーをみてみましょう。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content">ヘッダーにある、「特産品について」をクリックしてください。</div></div>
             </div>
-        </details>
+        </div>
 
-        <!-- ================== Lv.3 ================== -->
-        <details class="level-group">
-            <summary class="level-summary">Lv.3 (No.14~15,17~18)</summary>
-            <div class="level-content">
-
-                <details class="hint-item">
-                    <summary class="hint-summary">No.14</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        山の神の名称について検索
-                    </div>
-                </details>
-
-                <details class="hint-item">
-                    <summary class="hint-summary">No.15</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        No.14の出典について検索
-                    </div>
-                </details>
-
-                <details class="hint-item">
-                    <summary class="hint-summary">No.17</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        No.12に遷移するために使用した検索ワードから連想されるワードを検索
-                    </div>
-                </details>
-
-                 <details class="hint-item">
-                    <summary class="hint-summary">No.17-ANSWER</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        「第一奉納口」を検索
-                    </div>
-                </details>
-
-                <details class="hint-item">
-                    <summary class="hint-summary">No.18</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        No.17を封鎖した組織について検索
-                    </div>
-                </details>
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 4 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">どこかクリックできる箇所はありませんか？</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">ヘッダーをみてみましょう。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content">ヘッダーにある、「お祭りについて」をクリックしてください。</div></div>
             </div>
-        </details>
+        </div>
 
-        <!-- ================== Lv.4 ================== -->
-        <details class="level-group">
-            <summary class="level-summary">Lv.4 (No.16,19~22)</summary>
-            <div class="level-content">
-
-                <details class="hint-item">
-                    <summary class="hint-summary">No.16</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        No.15の画像内にある村の旧名について検索
-                    </div>
-                </details>
-
-                <details class="hint-item">
-                    <summary class="hint-summary">No.19</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        司令を発令した組織について検索
-                    </div>
-                </details>
-
-                <details class="hint-item">
-                    <summary class="hint-summary">No.20</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        No.14の文章から2回の噴火、飢饉が起きた年代(2つの山が噴火した年)を外部サイト(Google等)にて検索し、入力。
-                    </div>
-                </details>
-
-                <details class="hint-item">
-                    <summary class="hint-summary">No.21</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        No.20に記載されている人物について検索
-                    </div>
-                </details>
-
-                <details class="hint-item">
-                    <summary class="hint-summary">No.22</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        No.20に記載されている研究機関について検索
-                    </div>
-                </details>
-
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 5 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">どこかクリックできる箇所はありませんか？</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">ヘッダーをみてみましょう。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content">ヘッダーにある、「村長から」をクリックしてください。</div></div>
             </div>
-        </details>
+        </div>
 
-        <!-- ================== Lv.5 ================== -->
-        <details class="level-group">
-            <summary class="level-summary">Lv.5 (Lv.23)</summary>
-            <div class="level-content">
-
-                <details class="hint-item">
-                    <summary class="hint-summary">No.23</summary>
-                    <div class="hint-text">
-                        <!-- ここにヒントを記述 -->
-                        No.6の画像内からID,ItemNoを抜き出す。年代はNo.21に到達するために使用したものと同じ。<br>（アイテム番号〇〇〇〇+年代△△△△、入力は〇〇〇〇△△△△）
-                    </div>
-                </details>
-
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 6 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">この村独自のものがあるようです。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">村の特産品は何でしょう？</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content">「クギワラタケ」と検索してください。</div></div>
             </div>
-        </details>
+        </div>
+
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 7 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">この村は何を売りにしていますか？</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">特産品を用いた郷土料理があるようです。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content">「クギワラ粥」と検索してください。</div></div>
+            </div>
+        </div>
+
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 8 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">村独自のお祭りがあるようです。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">村のお祭りのタイムスケジュールに、気になる項目はありませんか？</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content"> 「宵の静寂」と検索してください。</div></div>
+            </div>
+        </div>
+
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 9 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">村長の挨拶はきちんと読みましたか？</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">村独自のルールが有るようですね。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content">「村の掟」と検索してください。</div></div>
+            </div>
+        </div>
+
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 10 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">まだ調べていない人物などはいませんか？</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">村長の名前はなんというでしょう？</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content">「守谷茂吉」と検索してください。</div></div>
+            </div>
+        </div>
+
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 11 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">宵の静寂では、何をしているでしょうか。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">宿泊客はどこに搬送されたのでしょう？</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content">「第二奉納口」と検索してください。</div></div>
+            </div>
+        </div>
+
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 12 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">宿泊客は何を見てしまったのでしょうか。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">運搬車両はどこへ向かったのでしょうか。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content">「御臥山」と検索してください。</div></div>
+            </div>
+        </div>
+
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 13 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">なにかの苦情が来ていますね。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">原因は何だと推測されているでしょうか。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content">「山鳴り」と検索してください。</div></div>
+            </div>
+        </div>
+
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 14 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">本当の原因は山鳴りではなかったようです。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">原因は何によって引き起こされていますか？</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content">「オフシ様」と検索してください。</div></div>
+            </div>
+        </div>
+
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 15 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">今の人たちが書いた文章ではなさそうですね。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">この文章はどこに書かれたものでしょうか。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content">「新編供犠村風土記」と検索してください。</div></div>
+            </div>
+        </div>
+
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 16 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">古い新聞の切り取りのようです。よく読んでみましょう。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">村の名前が改名されたようです。前の名前はなんでしたか？</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content">「供犠村」と検索してください。</div></div>
+            </div>
+        </div>
+
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 17 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">詰まったら前のページまで戻ってみましょう。「第二奉納口」からここまで来ましたよね。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">「第二奉納口」があるなら、アレもありそうですよね。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content">「第一奉納口」と検索してください。</div></div>
+            </div>
+        </div>
+
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 18 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">この事故の後、浄化作業がなされたようです。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">浄化作業は一体誰がやったんでしょうか？</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content"> 「御臥山環境保全組合」と検索してください。</div></div>
+            </div>
+        </div>
+
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 19 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">復旧完了した後に、ここは封鎖されてしまったようです。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">最終的な決定をしたのはどこでしょうか？</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content">「御臥山管理局」と検索してください。</div></div>
+            </div>
+        </div>
+
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 20 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">2つの山が噴火し、飢饉が起きた年を、調べてみましょう。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">「天明の大飢饉」が該当しそうです。2つの火山が噴火した年はいつですか？</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content">「1783」と入力してください。</div></div>
+            </div>
+        </div>
+
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 21 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">覚書をよく読んでみましょう。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">見慣れない人物の名前は調べましたか？</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content">「佐伯浩二」と検索してください。</div></div>
+            </div>
+        </div>
+
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 22 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">覚書をよく読んでみましょう。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">佐伯浩二はどこの人間でしょうか？</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content">「国立菌類研究所」と検索してください。</div></div>
+            </div>
+        </div>
+
+        <div class="page-accordion">
+            <button class="page-trigger">ページ 23 のヒント</button>
+            <div class="page-content">
+                <div class="sub-hint-box"><button class="sub-trigger">【第1段階】ヒント1</button><div class="sub-content">NATIONAL MYCOLOGY DBのスクリーンショットを何処かで見た覚えはありませんか？</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第2段階】ヒント2</button><div class="sub-content">パスワードは「アイテム番号+始まりの年の8桁」すなわち、「アイテム番号〇〇〇〇+年代△△△△、入力は〇〇〇〇△△△△」となります。</div></div>
+                <div class="sub-hint-box"><button class="sub-trigger">【第3段階】答え</button><div class="sub-content">IDは「8235149」パスワードは「62371783」です。</div></div>
+            </div>
+        </div>
+
 
     </div>
+</main>
+
+<footer>
+    このサイトの内容はフィクションです。登場する人物・団体・名称等は架空のものであり、実在のものとは関係ありません。
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // ページごとのアコーディオン（親）の開閉
+    const pageTriggers = document.querySelectorAll('.page-trigger');
+    pageTriggers.forEach(trigger => {
+        trigger.addEventListener('click', function() {
+            const parent = this.parentElement;
+            // 他のページを閉じたい場合は以下の2行を有効化
+            // document.querySelectorAll('.page-accordion').forEach(acc => {
+            //     if(acc !== parent) acc.classList.remove('is-active');
+            // });
+            parent.classList.toggle('is-active');
+        });
+    });
+
+    // 段階的ヒント（子）の開閉
+    const subTriggers = document.querySelectorAll('.sub-trigger');
+    subTriggers.forEach(trigger => {
+        trigger.addEventListener('click', function() {
+            const parent = this.parentElement;
+            parent.classList.toggle('is-active');
+        });
+    });
+});
+</script>
 
 </body>
 </html>
